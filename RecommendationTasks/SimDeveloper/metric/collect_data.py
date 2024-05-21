@@ -57,6 +57,7 @@ class Graph():
         # 贡献同一仓库的开发者们
         for repo in self.commit_rels.get(contributor_idx, []):
             contributor_idxs.update(self.reverse_commit_rels.get(repo, []))
+        contributor_idxs.discard(contributor_idx)
         return list(contributor_idxs)
 
 
@@ -64,7 +65,7 @@ if __name__ == "__main__":
     sample_path = ("../data/test.json", "../data/valid.json")
     org_user_path = "../data/org_user.json"
 
-    dst_path = "./data/dataset_valid_test.json"
+    dst_path = "./data/dataset_valid_test_modified.json"
 
     with open(sample_path[0], "r", encoding="utf-8") as inf:
         samples = json.load(inf)
@@ -86,19 +87,29 @@ if __name__ == "__main__":
         star_rels_f="../../../GNN/DataPreprocess/full_graph/content/contributor_star_repo.txt",
         watch_rels_f="../../../GNN/DataPreprocess/full_graph/content/contributor_watch_repo.txt",
     )
-
+    
+    # modified to delete duplicated item in GT
     contributor_labels = {}
     for sample in samples:
         src_idx, pos_contributor_idx, neg_contributor_idx = sample
         if src_idx not in contributor_labels:
             contributor_labels[src_idx] = []
+        labels = set()
         for o in user_orgs[src_idx]:
-            contributor_labels[src_idx].extend(org_users[o])
+            labels.update(org_users[o])
+        labels.discard(src_idx)
+        contributor_labels[src_idx].extend(labels)
 
     samples = []
     for src_idx in contributor_labels:
         search_scope = g.get_contributor_by_contributor(src_idx)
-        samples.append([src_idx, search_scope, contributor_labels[src_idx]])
+        
+        # modified to make GT all in search_scope and not empty
+        labels = list(set(search_scope).intersection(set(contributor_labels[src_idx])))
+        if len(labels) == 0:
+            continue
+        
+        samples.append([src_idx, search_scope, labels])
     
     with open(dst_path, "w", encoding="utf-8") as ouf:
         json.dump(samples, ouf, indent=4, ensure_ascii=False)

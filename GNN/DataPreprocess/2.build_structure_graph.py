@@ -11,7 +11,7 @@ from dgl.data.utils import save_graphs
 """
     这个类也只在此文件中使用这一次. 
     刚才第一步中 1.load_crawled_data 做了数据处理, 
-    接下来构建图. 
+    这一步来构建图. 
 
     (还没有针对节点的 embedding 做训练)
 

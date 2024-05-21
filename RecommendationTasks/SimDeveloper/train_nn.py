@@ -67,9 +67,9 @@ if __name__ == "__main__":
     train_sample_path = "./data/train.json"
     valid_sample_path = "./data/valid.json"
     test_sample_path = "./data/test.json"
-    model_path = "./bin/model.bin"
+    model_path = "./bin/model_EL.bin"
 
-    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding.bin"
+    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding_EL.bin"
     node_embedding = torch.load(node_embedding_path)["contributor"]
 
     train_dataset = MyDataset(samples=train_sample_path, node_embedding_obj=node_embedding)
@@ -151,3 +151,13 @@ if __name__ == "__main__":
             neg_totals += neg_total
     precision, recall, f1 = metric(pos_rights, neg_rights, pos_totals, neg_totals)
     print(f"Test: precision={precision}, recall={recall}, f1={f1}")
+
+
+'''
+这是在二分类任务上的测试指标，区别于真正的推荐任务
+训练包括随机性，所以每一次跑出来的结果都在小范围波动
+LE(paper)   Test: precision=0.877819083023544, recall=0.9422718808193669, f1=0.9089042853477034
+L:          Test: precision=0.907563025210084, recall=0.9193934557063048, f1=0.913439936566671
+E:          Test: precision=0.8259516399329663, recall=0.9177972865123704, f1=0.8694556451612905
+EL:         Test: precision=0.8992974238875878, recall=0.9193934557063048, f1=0.909234411996843
+'''

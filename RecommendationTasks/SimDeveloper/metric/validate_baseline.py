@@ -59,10 +59,10 @@ def collate_fn(batch):
 if __name__ == "__main__":
     trained_model_path = "../bin/baseline.bin"
     feat_size = 2383
-    validation_dataset = "./data/dataset_valid_test.json"
-    dst_result_path = "./result/baseline_result_valid_test.json"
+    validation_dataset = "./data/dataset_valid_test_modified.json"
+    dst_result_path = "./result/baseline_result_valid_test_modified.json"
 
-    contributor_topic_embedding_path = "../../TopicEmbedding/embed/contributor_topic_embedding.pkl"
+    contributor_topic_embedding_path = "../../TopicEmbedding/embed/contributor_topic_embedding_v4.pkl"
     with open(contributor_topic_embedding_path, "rb") as inf:
         contributor_embedding = pickle.load(inf)
 

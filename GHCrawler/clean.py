@@ -157,17 +157,33 @@ class DataCleaner(object):
             for x in set(self.selected_repos) - has_languaged_repos:
                 outf.write(x+"\n")
     
+    def clean_repo_discussions(self, filename='repo_discussions.txt'):
+        with open(os.path.join(self.src_dir, filename), "r", encoding="utf-8") as inf, open(os.path.join(self.dst_dir, filename), "w", encoding="utf-8") as outf:
+            for line in inf:
+                repo, _, discussions = line.strip().split("\t")
+                if repo not in self.selected_repos:
+                    continue
+                discussions = json.loads(discussions)
+                # body不可为空，或者巨短
+                # 提出者不能是bot
+                new_discussions = [discussion for discussion in discussions if discussion["body"] and len(discussion["body"]) > 10 and discussion['author'] and "[bot]" not in discussion["author"] and "-bot" not in discussion["author"] and "_bot" not in discussion["author"]]
+                # contributors = [i["author"] for i in new_discussiosn]
+                # self.selected_contributors.update(contributors)
+                outf.write("{}\t{}\n".format(repo, json.dumps(new_discussions, ensure_ascii=False)))
+        pass
+    
     def clean(self):
-        self.clean_repo_statistics()
-        self.clean_repo_pr_commits()
-        self.clean_repo_languages()
-        self.clean_repo_contributions()
-        self.clean_repo_prs()
-        self.clean_repo_issues()
-        self.clean_repo_stars()
-        self.clean_repo_watchers()
-        self.clean_user_followers()
-        self.clean_user_organizations()
+        # self.clean_repo_statistics()
+        # self.clean_repo_pr_commits()
+        # self.clean_repo_languages()
+        # self.clean_repo_contributions()
+        # self.clean_repo_prs()
+        # self.clean_repo_issues()
+        # self.clean_repo_stars()
+        # self.clean_repo_watchers()
+        # self.clean_user_followers()
+        # self.clean_user_organizations()
+        self.clean_repo_discussions()
 
 if __name__ == "__main__":
     cleaner = DataCleaner()

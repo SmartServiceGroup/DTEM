@@ -28,7 +28,9 @@ class ProjectEmbeddingAggregator():
         project_path_n_funcs = {}
         for embed_fname, n_funcs_fname in zip(self.path_embedding_fnames, self.path_n_funcs_fnames):
             print(embed_fname, n_funcs_fname)
-            with open(os.path.join(self.path_embedding_dir, embed_fname), "rb") as inf1, open(os.path.join(self.path_n_funcs_dir, n_funcs_fname), "r", encoding="utf-8") as inf2:
+            with \
+                    open(os.path.join(self.path_embedding_dir, embed_fname), "rb") as inf1, \
+                    open(os.path.join(self.path_n_funcs_dir, n_funcs_fname), "r", encoding="utf-8") as inf2:
                 tmp_embeddings = pickle.load(inf1)
                 tmp_n_funcs = json.load(inf2)
                 for project in tmp_embeddings:

@@ -8,13 +8,14 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset, SequentialSampler
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 import numpy as np
+from tqdm import tqdm
 
 PADDING_VALUE = 0
 
 class MyModel(torch.nn.Module):
     def __init__(self, pretrained_bert_model) -> None:
         super().__init__()
-        self.bert = AutoModelForMaskedLM.from_pretrained(pretrained_bert_model, output_hidden_states=True)
+        self.bert = AutoModelForMaskedLM.from_pretrained(pretrained_bert_model, output_hidden_states=True, cache_dir='./xlm-roberta-base')
     
     def forward(self, input_ids, attention_mask):
         # The explanation of the output: https://huggingface.co/docs/transformers/main_classes/output#transformers.modeling_outputs.MaskedLMOutput
@@ -77,7 +78,7 @@ def embed_text(model:torch.nn.Module, tokenizer, text_filepath, out_filepath, ba
     
     model.eval()
 
-    for batch in text_dataloader:
+    for batch in tqdm(text_dataloader, total=len(text_dataloader)):
         input_ids = batch["input_ids"].to(device)
         attention_mask = batch["attention_mask"].to(device)
         with torch.no_grad():

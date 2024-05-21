@@ -3,10 +3,7 @@ general:
   # 1. 总开发者的数量: 394474
   # 2. 总的pr的数量:  
 
-  # 最近的指令: 
-  # - import Comparisons.experiments.alpha.collect_data.get_pr_apis
-  # - 
-
+  basepath: '/media/dell/disk/vkx/DTEM/'
   filepath: 
 
     contributor_idx_file: 'GNN/DataPreprocess/full_graph/content/contributors.json'
@@ -24,32 +21,7 @@ general:
     linguist_file:        'Comparisons/data/alpha/languages.yml'
   
   tokens: 
-    - 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  # 惠珍的 token
-    - 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  # SMSQO-2
-    - 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  # SMSQO-3
-    - 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  # SMSQO (Main account)
-    - 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  # SMSQO-4
-    - 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  # VKX-bot-0
-    - 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  # VKX-bot-1
     - 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  # VKX-bot-2
-
-  example:  # 做测试用 
-    user: 
-      - tcurdt
-      - ebourg
-      - tmortagne
-    repo: 
-      - tcurdt/jdeb
-      - tcurdt/jdependency
-      - connectbot/connectbot
-      - rnewson/couchdb-lucene
-      - apache/activemq
-    issue: 
-      - datalux/osintgram#670
-      - datalux/osintgram#669
-      - datalux/osintgram#668
-      - datalux/osintgram#667
-      - datalux/osintgram#666
 
 
 alpha: 
@@ -139,3 +111,8 @@ gamma:
     lr: 0.001
     epochs: 40
     device: 'cuda:0'
+
+theta: 
+  filepath: 
+    # DICT <| { $issue_name: np.ndarray[4096] | None }
+    issue_embeddings: 'Comparisons/embedding/theta/issue_embeddings.pkl'

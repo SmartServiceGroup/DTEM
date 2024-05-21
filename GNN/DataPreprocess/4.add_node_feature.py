@@ -17,7 +17,7 @@ from utils import RepositoryFeatureLoader, IssueFeatureLoader, PRFeatureLoader
 
     Note: 
         没有训练: 这一步只是拼接.
-        输出: ./full_graph/structure_graph_with_node_feature.bin
+        输出: ./full_graph/structure_graph_with_node_feature_with_metapath.bin
 """
 
 
@@ -27,7 +27,7 @@ pr_idx_file                     = "./full_graph/content/prs.json"
 repo_idx_file                   = "./full_graph/content/repositories.json"
 feature_dir                     = "../../NodeFeatureInitializer/export"
 metapath_node_embedding_file    = "./cache/full_graph/node_metapath_embedding.bin"
-dst_graph_file                  = "./full_graph/structure_graph_with_node_feature.bin"
+dst_graph_file                  = "./full_graph/structure_graph_with_node_feature_with_metapath.bin"
 
 if __name__ == "__main__":
     device = torch.device("cpu")

@@ -77,11 +77,9 @@ class CollaborativeFiltering:
                     user1_sim_matrix[u][v] += 1
                     user1_sim_matrix[v][u] += 1
 
-        print("The number of user1s is " + str(len(set(it[1] for it in data))))
-        print("The number of user2s is " + str(len(set(it[0] for it in data))))
-
-        # <repo count>      = len(set(it[1] for it in data)) = 22655
-        # <reviewer count>  = len(set(it[0] for it in data)) = 95532
+        print("The number of user1s is " + str(len(set(it[1] for it in data))))     # 18049
+        print("The number of user2s is " + str(len(set(it[0] for it in data))))     # 16861
+        print("The number of total users is " + str(len(user1_sim_matrix)))         # 20284
 
         """
             ```python

@@ -9,6 +9,19 @@ from transformers import (RobertaConfig, RobertaModel, RobertaTokenizer)
 
 from embedder_code import embed_code_snippet, Model
 
+'''
+名字叫 embed_repository_code, 但其实和 repository 没啥关系. 
+
+关注两个目录: NodeFeatureInitializer/RepositoryCodeEmbedding/{codes,result}. 
+
+codes 下面是若干个文件, 按照语言分类. 
+每个文件中是 jsonl 格式, 内容是: 
+LIST <| JSON { project, path, code, lang }. 
+
+@see also: NodeFeatureInitializer/embedder_code.py embed_code_snippet
+'''
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_gpu", type=int, default=1)
 parser.add_argument("--n_process", type=int, default=16)
@@ -18,9 +31,9 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     cpu_count = args.n_process
-    config_name = "microsoft/graphcodebert-base"
-    tokenizer_name = "microsoft/graphcodebert-base"
-    model_name_or_path = "microsoft/graphcodebert-base"
+    config_name         = "microsoft/graphcodebert-base"
+    tokenizer_name      = "microsoft/graphcodebert-base"
+    model_name_or_path  = "microsoft/graphcodebert-base"
     code_length = 256
     data_flow_length = 64
     eval_batch_size = args.batch_size

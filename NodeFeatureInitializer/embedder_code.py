@@ -51,12 +51,12 @@ logger = logging.getLogger(__name__)
 cpu_count = 16
 
 dfg_function = {
-    'python': DFG_python,
-    'java': DFG_java,
-    'ruby': DFG_ruby,
-    'go': DFG_go,
-    'php': DFG_php,
-    'javascript': DFG_javascript
+    'python':       DFG_python,
+    'java':         DFG_java,
+    'ruby':         DFG_ruby,
+    'go':           DFG_go,
+    'php':          DFG_php,
+    'javascript':   DFG_javascript
 }
 
 # load parsers

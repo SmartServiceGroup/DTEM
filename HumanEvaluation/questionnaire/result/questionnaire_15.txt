@@ -1,0 +1,108 @@
+
+关于Github推荐服务测评的问卷
+您的开发经验时长[单选题]
+2年以内
+2-5年
+5-10年
+10年以上
+
+您使用Github的时长[单选题]
+从未使用
+2年以内
+5-10年
+10年以上
+
+您是否在Github上对开源项目做出贡献[多选题]
+从未贡献
+曾提出过 Pull Request, 但并未被采纳
+曾提出过 Pull Request, 而且被项目管理者采纳
+曾提出过 Issue, 但并未被采纳
+曾提出过 Issue, 而且被项目管理者采纳
+曾提出过 Issue, 并提出相应的 Pull Request
+曾参与过开源项目的管理维护工作
+
+===分页===
+
+下面的每道题中会分别给出一个Github上的开发者和一个Github上的开源仓库，以及它们的Github链接。我们感兴趣的是，你认为在多大程度上，该开发者适合对题目给出的仓库做出贡献。请你浏览该用户和该仓库的基本信息，并作出你的评价\n用户：[mourner](https://github.com/mourner), 开源仓库：[benbalter/jekyll-auth](https://github.com/benbalter/jekyll-auth)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户具有该项目所需的技术能力?(1表示最少,5表示最多,下同)
+在多大程度上，该用户具有与该项目相似的开发经验?
+
+用户：[dougwilson](https://github.com/dougwilson), 开源仓库：[balderdashy/sails-disk](https://github.com/balderdashy/sails-disk)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户具有该项目所需的技术能力?
+在多大程度上，该用户具有与该项目相似的开发经验?
+
+用户：[lahmatiy](https://github.com/lahmatiy), 开源仓库：[posthtml/posthtml-expressions](https://github.com/posthtml/posthtml-expressions)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户具有该项目所需的技术能力?
+在多大程度上，该用户具有与该项目相似的开发经验?
+
+用户：[adamchainz](https://github.com/adamchainz), 开源仓库：[grillazz/fastapi-redis](https://github.com/grillazz/fastapi-redis)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户具有该项目所需的技术能力?
+在多大程度上，该用户具有与该项目相似的开发经验?
+
+===分页===
+
+下面的每道题中会分别给出Github上的一个 PR(Pull Request) 和一个开发者，以及它们的链接。我们感兴趣的是，你认为在多大程度上，该开发者适合对作为 Reviewer 来审查该项 PR。请你浏览给出的 Pull Request和开发者的基本信息，并作出你的评价\nPull Request：[googleforcreators/web-stories-wp##12890](https://github.com/googleforcreators/web-stories-wp/pull/12890), 开发者：[nadeeshaan](http://github.com/nadeeshaan)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户精通该 PR 相关的技术，并能够识别 PR 中的潜在问题?
+
+Pull Request：[strawberry-graphql/strawberry##2355](https://github.com/strawberry-graphql/strawberry/pull/2355), 开发者：[neilalexander](http://github.com/neilalexander)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户精通该 PR 相关的技术，并能够识别 PR 中的潜在问题?
+
+Pull Request：[raphaelstolt/php-jsonpointer##16](https://github.com/raphaelstolt/php-jsonpointer/pull/16), 开发者：[GoPro16](http://github.com/GoPro16)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户精通该 PR 相关的技术，并能够识别 PR 中的潜在问题?
+
+===分页===
+
+下面的每道题中会分别给出Github上的一个开源仓库和一个开发者，以及它们的链接。我们感兴趣的是，你认为在多大程度上，该开发者适合参与该项目的管理和维护工作。请你浏览给出的仓库和开发者的基本信息，并作出你的评价\n开源仓库：[backface/turtlestitch](https://github.com/backface/turtlestitch), 用户：[jmoenig](http://github.com/jmoenig)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户能够较好地完成该项目的运行维护工作？
+在多大程度上，该用户的技术栈能够涵盖项目所设计的技术？
+
+开源仓库：[timvisee/send](https://github.com/timvisee/send), 用户：[dannycoates](http://github.com/dannycoates)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户能够较好地完成该项目的运行维护工作？
+在多大程度上，该用户的技术栈能够涵盖项目所设计的技术？
+
+开源仓库：[philc/vimium](https://github.com/philc/vimium), 用户：[smblott-github](http://github.com/smblott-github)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户能够较好地完成该项目的运行维护工作？
+在多大程度上，该用户的技术栈能够涵盖项目所设计的技术？
+
+开源仓库：[k1low/awspec](https://github.com/k1low/awspec), 用户：[k1LoW](http://github.com/k1LoW)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，该用户能够较好地完成该项目的运行维护工作？
+在多大程度上，该用户的技术栈能够涵盖项目所设计的技术？
+
+===分页===
+
+下面的每道题中会分别给出两个Github上的两个用户，以及它们的链接。我们感兴趣的是，你认为在多大程度上，这两个用户具有相似的技术特征。请你浏览给出的开发者的基本信息，并作出你的评价\n用户1：[mdeggies](https://github.com/mdeggies), 用户2：[sneal](http://github.com/sneal)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，这两个用户具有相似的技术栈？
+在多大程度上，这两个用户具有相似的开发工作经验？
+
+用户1：[jyejare](https://github.com/jyejare), 用户2：[oshtaier](http://github.com/oshtaier)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，这两个用户具有相似的技术栈？
+在多大程度上，这两个用户具有相似的开发工作经验？
+
+用户1：[crschmidt](https://github.com/crschmidt), 用户2：[klokan](http://github.com/klokan)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，这两个用户具有相似的技术栈？
+在多大程度上，这两个用户具有相似的开发工作经验？
+
+用户1：[Ivanov-Anton](https://github.com/Ivanov-Anton), 用户2：[Fivell](http://github.com/Fivell)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，这两个用户具有相似的技术栈？
+在多大程度上，这两个用户具有相似的开发工作经验？
+
+用户1：[xavortm](https://github.com/xavortm), 用户2：[fabiankaegy](http://github.com/fabiankaegy)[矩阵单选题]
+1 2 3 4 5
+在多大程度上，这两个用户具有相似的技术栈？
+在多大程度上，这两个用户具有相似的开发工作经验？
+

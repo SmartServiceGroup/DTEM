@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
+from tqdm import tqdm
 
 
 class Net(nn.Module):
@@ -68,9 +69,9 @@ if __name__ == "__main__":
     train_sample_path = "./data/train.json"
     valid_sample_path = "./data/valid.json"
     test_sample_path = "./data/test.json"
-    model_path = "./bin/model.bin"
+    model_path = "./bin/model_EL.bin"
     
-    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding.bin"
+    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding_EL.bin"
     all_embedding = torch.load(node_embedding_path)
     repo_node_embedding = all_embedding["repository"]
     contributor_node_embedding = all_embedding["contributor"]
@@ -156,3 +157,11 @@ if __name__ == "__main__":
     print(f"Test: precision={precision}, recall={recall}, f1={f1}")
 
 
+'''
+这是在二分类任务上的测试指标，区别于真正的推荐任务
+训练包括随机性，所以每一次跑出来的结果都在小范围波动
+LE(paper)   Test: precision=0.9598702877989461, recall=0.9594813614262561, f1=0.9596757852077
+L:          Test: precision=0.9565909996017523, recall=0.973257698541329, f1=0.9648523799959832
+E:          Test: precision=0.9010559249120063, recall=0.93354943273906, f1=0.9170149253731342
+EL:         Test: precision=0.9600638977635783, recall=0.9740680713128039, f1=0.9670152855993565
+'''

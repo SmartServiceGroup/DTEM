@@ -135,6 +135,7 @@ class RepositoryFeatureLoader():
         text_embedding = self.load_text_feature_for_repo_node(repo_text_embedding_file, text_embed_size, device)
         if include_topic:
             print("Total feature size is {}".format(text_embed_size+code_embed_size+language_embed_size+topic_embed_size))
+            repo_initial_embeddings = torch.cat([text_embedding, code_embedding, language_embedding], dim=1)
             torch.save(repo_initial_embeddings.to(cpu), cache_path)
             return torch.cat([text_embedding, code_embedding, language_embedding, topic_embedding], dim=1)
 

@@ -64,8 +64,8 @@ class ContributorIssueEmbedding:
     def __init__(self): 
 
         # step 1. get self.model 
-        model = Doc2Vec.load(cfg['model']['dev2vec_issue_file_path'])   # output_vec_size: 150
-        self.model = model
+        self.load_model()
+
 
         # step 2. get self.issues (all issues here)
         issue_titles: Dict[str, str]  = { 
@@ -105,6 +105,10 @@ class ContributorIssueEmbedding:
 
         self.contributor_idx: Dict[str, int] = load_contributor_index()
         self.issue_idx_rvt = dict_invert(load_issue_index())
+
+    def load_model(self): 
+        model = Doc2Vec.load(cfg['model']['dev2vec_issue_file_path'])   # output_vec_size: 150
+        self.model = model
 
 
     def convert(self, user_name: str) -> np.ndarray: 

@@ -63,4 +63,3 @@ if __name__ == "__main__":
     with open(dst_file, "w", encoding="utf-8") as outf:
         json.dump(samples, outf, indent=4, ensure_ascii=False)
     
-

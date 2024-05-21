@@ -27,7 +27,7 @@ class ParameterNamespace():
         
         self.logger = None
 
-        self.graph_path = "../DataPreprocess/full_graph/structure_graph_with_node_feature.bin"
+        self.graph_path = "../DataPreprocess/full_graph/structure_graph_with_node_feature_with_metapath.bin"
 
         self.use_gpu = False
         self.device = None
@@ -50,26 +50,10 @@ class ParameterNamespace():
         self.in_feats = 512
         self.hidden_size = 512
         self.out_feats = 512
-
-        # parameters for dataloading
-        self.negative_samples = 1
-        self.lp_batch_size = 512
-        self.er_batch_size = 48
-        self.ec_batch_size = 24
-        self.ec_etype = ("pr", "pr_belong_to_repo", "repository")
-        self.er_etype = ("repository", "repo_committed_by_contributor", "contributor")
         
-        # training parameters
-        self.epochs = 40
-        self.lr = 0.0001
-        self.lr_decay = 0.95
-        self.weight_decay = 0.001
-        self.max_grad = 4
-        self.omega = 0.1
-
         # Trained model path
         # Please replace the path with your own trained model path
-        self.trained_model_path = "./bin/cat/model.bin"
+        self.trained_model_path = "./trained/Comparison_LP_ER/EL/model.bin"
         self.node_embedding_dir = f"./node_embedding/{special_suffix}_{now}/"
         if not os.path.exists(self.node_embedding_dir):
             os.mkdir(self.node_embedding_dir)
@@ -92,6 +76,7 @@ if __name__ == "__main__":
     graph_loader = GraphLoader(graph_path=pn.graph_path)
     hg, node_feats, edge2ids = graph_loader.load_graph(device=pn.device)
     node_feat_dim_dict = {ntype: node_feats[ntype].shape[1] for ntype in hg.ntypes}
+    print(node_feat_dim_dict)
 
     """
     Move the graph to GPU

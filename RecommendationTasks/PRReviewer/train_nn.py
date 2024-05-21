@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
-
+from tqdm import tqdm
 
 class Net(nn.Module):
     def __init__(self, embedding_dim):
@@ -68,9 +68,9 @@ if __name__ == "__main__":
     train_sample_path = "./data/train.json"
     valid_sample_path = "./data/valid.json"
     test_sample_path = "./data/test.json"
-    model_path = "./bin/model.bin"
+    model_path = "./bin/model_EL.bin"
     
-    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding.bin"
+    node_embedding_path = "../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding_EL.bin"
     all_embedding = torch.load(node_embedding_path)
     repo_node_embedding = all_embedding["repository"]
     contributor_node_embedding = all_embedding["contributor"]
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     epochs = 60
 
     # Training loop
-    for epoch in range(60):
+    for epoch in tqdm(range(60)):
         running_loss = 0.0
         model.train()
         for batch_idx, (x, labels) in enumerate(train_dataloader):
@@ -158,3 +158,11 @@ if __name__ == "__main__":
     print(f"Test: precision={precision}, recall={recall}, f1={f1}")
 
 
+'''
+这是在二分类任务上的测试指标，区别于真正的推荐任务
+训练包括随机性，所以每一次跑出来的结果都在小范围波动
+LE(paper)   Test: precision=0.9464524765729585, recall=0.9480842911877395, f1=0.9472676811178102
+L:          Test: precision=0.9733154156267998, recall=0.9712643678160919, f1=0.9722888100489021
+E:          Test: precision=0.8572533849129593, recall=0.8490421455938697, f1=0.8531280076997112
+EL:         Test: precision=0.9463124651681218, recall=0.9758620689655172, f1=0.960860133924361
+'''

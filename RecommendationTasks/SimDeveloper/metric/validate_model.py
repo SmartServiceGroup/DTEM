@@ -58,8 +58,8 @@ def collate_fn(batch):
 if __name__ == "__main__":
     trained_model_path = "../bin/model.bin"
     feat_size = 512
-    validation_dataset = "./data/dataset_valid_test.json"
-    dst_result_path = "./result/model_result_valid_test.json"
+    validation_dataset = "./data/dataset_valid_test_modified.json"
+    dst_result_path = "./result/model_result_valid_test_modified.json"
 
     trained_embedding_path = "../../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding.bin"
     all_embedding = torch.load(trained_embedding_path)

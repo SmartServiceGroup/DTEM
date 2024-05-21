@@ -11,8 +11,8 @@ FILE_PREFIX = 'RecommendationTasks/SimDeveloper_CF'
 # MAYBE DEPRECATED
 CF_DICT_FILE_PATH = 'RecommendationTasks/SimDeveloper_CF/bin/cf_dict.pkl'
 
-VALID_TEST_DATA_FILE_PATH   = f'{FILE_PREFIX}/metric/data/dataset_valid_test.json'
-VALID_RESULT_PATH           = f'{FILE_PREFIX}/metric/result/result_valid_test.json'
+VALID_TEST_DATA_FILE_PATH   = f'{FILE_PREFIX}/metric/data/dataset_valid_test_modified.json'
+VALID_RESULT_PATH           = f'{FILE_PREFIX}/metric/result/result_valid_test_modified.json'
 
 REPO_PARTIAL_FILE_PATH      = 'RecommendationTasks/SimDeveloper_CF/data/train.json'
 REPOSITORY_FILE_PATH        = 'GNN/DataPreprocess/full_graph/content/repositories.json'

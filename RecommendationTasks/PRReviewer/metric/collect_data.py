@@ -30,7 +30,7 @@ class Graph():
 if __name__ == "__main__":
     sample_path = ("../data/test.json", "../data/valid.json")
     pr_reviewers_path = "../data/pr_reviewers.json"
-    dst_path = "./data/dataset_valid_test.json"
+    dst_path = "./data/dataset_valid_test_modified.json"
     with open(sample_path[0], "r", encoding="utf-8") as inf:
         samples = json.load(inf)
     with open(sample_path[1], "r", encoding="utf-8") as inf:
@@ -57,7 +57,13 @@ if __name__ == "__main__":
     samples = []
     for repo_idx, pr_idx in pr_labels:
         search_scope = g.get_contributor_by_repo(repo_idx)
-        samples.append([repo_idx, pr_idx, search_scope, pr_labels[(repo_idx, pr_idx)]])
+        
+        # modified to ensure all labels are in search scope
+        labels = list(set(search_scope).intersection(set(pr_labels[(repo_idx, pr_idx)])))
+        if len(labels) == 0:
+            continue
+        
+        samples.append([repo_idx, pr_idx, search_scope, labels])
     
     with open(dst_path, "w", encoding="utf-8") as ouf:
         json.dump(samples, ouf, indent=4, ensure_ascii=False)

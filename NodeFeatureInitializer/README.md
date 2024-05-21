@@ -10,7 +10,7 @@
 
 简单说一下数据的流向. 
 
-0. 数据来源: CHCrawler/cleaned/* 
+0. 数据来源: GHCrawler/cleaned/* 
 
 1. 第一步: 数据清洗. 发生在如 ./PREmbedding/load_{code,text}_data.py 文件中. 这个文件将会读取上一步的数据, 按照论文中的说法做一定的转换. 转换后的数据存放到如 pr_descriptions.txt文件下. 这其实是一个jsonl文件. 
 
@@ -27,8 +27,6 @@
    我按照最后一步生成(之前丢失的) `export/repo_code_embedding.pkl`. 
    因为脚本会同时生成 `export/repo_code_path_embedding.pkl`, 所以提前备份了. 
    但新生成的和原来的大小并不一致: 原来的是 21G, 新生成的只有 20G. 
-
-   (但我不想追究了. 妈的. 反正最后论文也没我的名字, 名义上的"我的科研成果"罢了, 没撂挑子不干就算好的了)
 
 2. 生成代码嵌入那部分代码没有细看. 
 

@@ -162,7 +162,9 @@ class CollaborativeFiltering:
             return ret  # ret 数量可能少于 20 个. 
 
         others = [it for it in search_scope if it not in recs]
-        # random.shuffle(others)  # TODO rethink about this. Is this necessary? 
+        random.shuffle(others)  # TODO rethink about this. Is this necessary? 
+        # 还是有必要的，这方法百分之九十以上给不出推荐，于是结果就是 search_scope
+        # 这么shuffle一下更鲁棒一点，否则search_scope的顺序影响他的性能很明显
         return recs + others
 
 

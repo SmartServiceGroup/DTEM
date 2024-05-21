@@ -10,6 +10,7 @@
 *.json.*
 *.jsonl.*
 *.bak
+*.pt
 NodeFeatureInitializer/*/*.txt
 GNN/DataPreprocess/full_graph/content/*.txt
 GHCrawler/readme/*

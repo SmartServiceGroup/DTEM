@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
+from tqdm import tqdm
 
 import numpy as np
 
@@ -61,8 +62,8 @@ def collate_fn(batch):
 if __name__ == "__main__":
     trained_model_path = "../bin/model.bin"
     feat_size = 512
-    validation_dataset = "./data/dataset_valid_test.json"
-    dst_result_path = "./result/model_result_valid_test.json"
+    validation_dataset = "./data/dataset_valid_test_modified.json"
+    dst_result_path = "./result/model_result_valid_test_modified.json"
     trained_embedding_path = "../../../GNN/HetSAGE/node_embedding/HetSAGE_node_embedding.bin"
     
     all_embedding = torch.load(trained_embedding_path)
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         dataset = json.load(inf)
     
     topks = {}
-    for repo_idx, pr_idx, search_scope, labels in dataset:
+    for repo_idx, pr_idx, search_scope, labels in tqdm(dataset, total=len(dataset)):
         # 
         if len(search_scope) < 10:
             continue

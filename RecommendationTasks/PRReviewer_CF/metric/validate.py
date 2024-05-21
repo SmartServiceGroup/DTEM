@@ -40,7 +40,7 @@ def evaluate(model_postfix='full', partial=False):
     
     cnt = 0
     for repo_id, pr_id, search_scope, gt in dataset:
-        if len(gt) < 5: continue        # 345 recommendations with gt>=5 in total
+        if len(search_scope) < 10: continue        
         cnt += 1
         
         recs: List[int] = klee.recommend(repo_id, search_scope)[:20]
