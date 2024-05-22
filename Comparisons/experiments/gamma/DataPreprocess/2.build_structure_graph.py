@@ -8,14 +8,6 @@ import torch
 from dgl.data.utils import save_graphs
 
 
-"""
-    @see also: GNN/DataPreprocess/2.build_structure_graph.py
-
-    和上面这个文件基本上没有区别 (复制过来的), 
-    不过我们尝试分别生成 follow 关系的社交网络以及剩下的部分. 
-
-    ./full_graph/content => ./full_graph/{interaction,social}_graph.bin 
-"""
 
 class GraphBuilder(object):
 

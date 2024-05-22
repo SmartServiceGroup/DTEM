@@ -2,26 +2,6 @@ import os
 import sys
 import json
 
-'''
-
-事实部分: 
-
-此文件读取了 PR_COMMIT_FILE 中的文件, 
-生成了这样一个字典:
-1. 以pr名为键, 以一个列表为值; 
-2. 列表中包含这样的文件路径: 它被PR修改过, 而且以 valid_suffix 为后缀. 
-字典保存在 DST_FILE 中. 
-
-猜测部分: 
-
-embedder_code 
-
-
-@see also: NodeFeatureInitializer/aggregate_pr_code_embedding.py
-
-2024-05-07 VKX
-'''
-
 PR_COMMIT_FILE = "../../GHCrawler/cleaned/repo_pr_commits.txt"
 DST_FILE = "./pr_modified_paths.json"
 

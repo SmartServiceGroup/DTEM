@@ -8,13 +8,6 @@ from RecommendationTasks.PRReviewer_CF.config import \
 
 
 def metric(model_prefix='full', partial=False): 
-    '''
-        读取 ../valiate.py 生成的文件, 并给出评价指标. 
-        指标的部分结果在此文件的其他注释中有统计. 
-
-        see also: 
-            ../validate.py -> evaluate()
-    '''
     if partial:
         model_prefix += '.partial'
     model_filepath = VALID_RESULT_PATH + '.' + model_prefix
@@ -62,9 +55,3 @@ def analysis(topks):
             mrr += 1 / i
             break
     return top1, top3, top5, top10, mrr
-
-"""
-    on modified dataset
-    0.0811 | 0.2329 | 0.3411 | 0.6255 | 0.2216
-
-"""

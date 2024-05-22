@@ -5,7 +5,7 @@
 Model saved
 
 test loss: 0.2550, test link prediction accuracy: 0.8807.
-### Link Prediction (链接预测)
+### Link Prediction 
 ###  cate: 0.0, right: 532345, total: 568943
 ###  cate: 1.0, right: 469745, total: 568943
 

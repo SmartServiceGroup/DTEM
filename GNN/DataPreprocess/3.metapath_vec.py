@@ -12,16 +12,6 @@ from dgl.nn.pytorch import metapath2vec
 from torch.optim import sparseadam
 from torch.utils.data import dataloader
 
-"""
-    只运行一次. 
-    用 metapath_vec 训练节点的 embedding.
-    这个工作的结果将被放到 ./cache/full_graph/node_metapath_embedding.bin 中. 
-
-    ./full_graph/structure_graph.bin => ./cache/full_graph/node_metapath_embedding.bin
-
-    补充: 
-        运行时, 会首先读条(猜测是加载数据), 然后使用GPU训练. 
-"""
 
 if __name__ == "__main__":
     src_structure_graph = "./full_graph/structure_graph.bin"

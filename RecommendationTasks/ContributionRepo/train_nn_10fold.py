@@ -7,11 +7,6 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
 from tqdm import tqdm
 
-# 10折交叉验证实验
-# 在train_nn.py的基础上进行。原先按照8：1：1的比例划分了数据集，验证集在每一个epoch后都被评估一遍，测试集最后被评估一遍。
-# 交叉验证中，按照9：1划分了数据集，产生10个训练集-测试集。
-# 这个脚本分别训练10个模型，取测试集上的平均表现。
-# python train_nn_10fold.py [输出文件] [图嵌入文件] [输出模型文件前缀] [嵌入向量长度]
 
 class Net(nn.Module):
     def __init__(self, embedding_dim):

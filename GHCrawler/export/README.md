@@ -71,5 +71,3 @@ repo`\t`pr_no`\t`commit_url`\t`[
 ]
 ```
 
-# Attention
-实际上本文获取的数据并不止项目提到的50000，大约应有80000个仓库，但是由于获取仓库的Pull Request和Issue过于花费时间，本文最终选择数据是50000个。

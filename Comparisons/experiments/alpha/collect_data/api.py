@@ -1,24 +1,5 @@
 #!/usr/bin/env python3
 
-'''
-这个脚本应该会运行挺长时间的了. 
-
-我后来发现了获取API数据的方式. 
-
-关键词: 1829584
-数据在 'GHCrawler/cleaned/repo_pr_commits.txt'中是有的, 
-但这个文件太大了...而且包含了 1.83M 行的数据, 一共有将近40GB! 
-
-我们希望, 根据这个文件, 提取到每个API的嵌入表达, 
-然后将这些嵌入的平均值, 作为开发者的 API 嵌入. 
-
-考虑到任务性质的不同, 在这个脚本中, 我们不做嵌入向量的生成, 
-只希望将API分配给每个ID的开发者. 
-
-不过即使是这样, 工作量也还是太大了. 我估计分析数据就得花上半周时间. 
-
-'''
-
 from mimetypes import init
 from typing import Any, Dict, Generator, List, Literal, Optional, Set, Tuple
 from Comparisons.experiments.general import \
@@ -54,7 +35,6 @@ class ApiTextExtractor:
         #   comes from: 
         #       https://github.com/github-linguist/linguist
         #           -> lib/linguist/languages.yml
-        # 包含github判断语言的规则.
         with open(cfg['general']['filepath']['linguist_file']) as fp: 
             linguist = yaml.load(fp, Loader=yaml.FullLoader)
         exts = {lang: linguist[lang]['extensions'] for lang in TARGET_LANG}
@@ -90,11 +70,6 @@ class ApiTextExtractor:
         # print(f'contr_idx = {contr_idx}')
         return contr_idx
 
-    '''
-        注意, 如果不设置 use_mode = False, 
-        则第一次调用这个函数会很花时间, 
-        因为它需要加载一个比较大的模型文件. 
-    '''
     def extract_api(self, filename: str, content: str, use_model=True) -> List[str]:  
         ext = filename.split('.')[-1]
         lang = self.ext2lang.get(ext)
@@ -201,7 +176,6 @@ class ApiTextCollector:
                 fp.write(f'{contr_idx}\t{json.dumps(list(apis))}\n')
 
     def _get_file_content(self, url: str) -> str: 
-        # TODO 固然简单, 但...? 
         resp = requests.get(url)
         print(time.time())
         return resp.text

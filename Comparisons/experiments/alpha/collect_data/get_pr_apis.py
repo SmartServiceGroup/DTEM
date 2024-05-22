@@ -1,10 +1,5 @@
 #!/usr/bin/env python3 
 
-'''
-这个脚本用来获取每一个开发者的commits. 
-会筛选掉不在我们考虑范围内的文件. 
-'''
-
 from typing import Any, Dict, Generator, List, Literal, Optional, Set, Tuple
 
 from Comparisons.experiments.general import \
@@ -73,15 +68,3 @@ if False:
 contr_pr_files = pickle_load(api_cfg['dst']['hugefile_cleaned'])
 print(sum([len(it) for it in contr_pr_files.values()]))
 c = Counter([len(it) for it in contr_pr_files.values()])
-
-
-
-
-
-
-
-# print(dict_inspect(pr_contrs, 10))
-
-
-
-# STEP 3. 

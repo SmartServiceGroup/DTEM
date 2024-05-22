@@ -1,17 +1,5 @@
 #!/usr/bin/env python3 
 
-'''
-这是 alpha 对比实验的核心. 
-在前面的工作中, 我们获取到了开发者的嵌入向量,
-这一步, 我们将利用这些嵌入向量, 训练一个三层的简单模型, 
-看看效果如何. 
-
-从这一步开始, 后面的工作都参考学长原有的 "相似开发者推荐" 的工作了. 
-
-@see also: 
-    RecommendationTasks/SimDeveloper/train_nn.py
-    RecommendationTasks/SimDeveloper/* 
-'''
 
 from RecommendationTasks.SimDeveloper.train_nn import \
         Net as SimDeveloperNet, \

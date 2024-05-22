@@ -5,11 +5,6 @@ import os
 import sys
 import time
 
-'''
-    下面三个 PrameterNamespace 来自 ./{HetGAT,HetGCN}/pretrain_with_lp.py. 
-
-    提取了公共的部分, 剩余不同的部分. 
-'''
 
 class GeneralParameterNamespace(): 
     def __init__(self, special_suffix):

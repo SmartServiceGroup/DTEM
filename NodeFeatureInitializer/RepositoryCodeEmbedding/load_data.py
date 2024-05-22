@@ -145,8 +145,8 @@ def multi_process_execution():
     processes = []
     for i in range(8):
         processes.append(Process(target=extract_code_snippets, args=(projects[i * 10000: (i+1) * 10000], finished_projects, i)))
-    [p.start() for p in processes]  # 开启进程
-    [p.join() for p in processes]   # 等待进程依次结束
+    [p.start() for p in processes] 
+    [p.join() for p in processes]   
 
 def update_finished_projects():
     finished_projects = dict()

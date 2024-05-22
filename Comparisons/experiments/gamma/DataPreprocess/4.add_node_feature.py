@@ -57,9 +57,6 @@ if __name__ == "__main__":
     # hg = dgl.transforms.AddReverse(sym_new_etype=True)(hg)
     metapath_node_embedding = torch.load(metapath_node_embedding_file, map_location=device)
 
-    # 这里将 pr, repo, issue, contributor 的 embedding 与 metapath 的 embedding 拼接. 
-    # TODO 我们可以考虑不用 pric 的 embedding, 将它们随机化. 再做后面的训练
-    # 然后比较各个下游任务上的效果. 
     hg.nodes["pr"].data["feat"] = torch.cat([metapath_node_embedding["pr"], pr_feature], dim=1)
     hg.nodes["repository"].data["feat"] = torch.cat([metapath_node_embedding["repository"], repo_feature], dim=1)
     hg.nodes["issue"].data["feat"] = torch.cat([metapath_node_embedding["issue"], issue_feature], dim=1)

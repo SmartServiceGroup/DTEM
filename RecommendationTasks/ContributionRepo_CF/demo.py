@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-# 莽是不对的. 直接保存成矩阵实在是不应该. 重新来一次吧. 
 
 import json
 import random
@@ -13,14 +12,6 @@ CONTRIBUTOR_FILE_PATH = 'GNN/DataPreprocess/full_graph/content/contributors.json
 DATASET_VALID_TEST_FILE_PATH = 'RecommendationTasks/ContributionRepo/metric/data/dataset_valid_test.json'
 
 class Evaluation(): 
-
-    """
-        params: 
-        - repo_idexes: Dict[str, int]. 仓库名和编号的对应关系
-        - contributor_idxes: Dict[str, int]. 用户名和编号的对应关系
-        - data: List[Tuple[int, Dict]]. 列表元素Tuple中, 第一项是仓库名, 后面的Dict是相关贡献者的名称和贡献数量.
-        - ground_truth: TODO ON THE GO
-    """
 
     def __init__(self): 
 
@@ -45,10 +36,6 @@ class Evaluation():
             self.ground_truth = ground_truth
 
 
-    # 给定一个仓库的下标，根据协同过滤，
-    # 给出这个仓库推荐的用户的下标. 
-    # 注意: 这个函数未必给出20个推荐的结果, 因为可能没有可以推荐的内容. 
-    # 此时, 根据extend的参数, 我们决定是否要从没有推荐的内容中, 再随机抽选几个, 以达到数量要求.
     def evaluate(self, idx: int, count:int=20, extend=False) -> List[int]: 
         data = self.data
         def distance(repo_a_idx, repo_b_idx): 

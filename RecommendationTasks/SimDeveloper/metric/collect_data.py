@@ -54,7 +54,6 @@ class Graph():
 
     def get_contributor_by_contributor(self, contributor_idx):
         contributor_idxs = set()
-        # 贡献同一仓库的开发者们
         for repo in self.commit_rels.get(contributor_idx, []):
             contributor_idxs.update(self.reverse_commit_rels.get(repo, []))
         contributor_idxs.discard(contributor_idx)
@@ -88,7 +87,6 @@ if __name__ == "__main__":
         watch_rels_f="../../../GNN/DataPreprocess/full_graph/content/contributor_watch_repo.txt",
     )
     
-    # modified to delete duplicated item in GT
     contributor_labels = {}
     for sample in samples:
         src_idx, pos_contributor_idx, neg_contributor_idx = sample
@@ -104,7 +102,6 @@ if __name__ == "__main__":
     for src_idx in contributor_labels:
         search_scope = g.get_contributor_by_contributor(src_idx)
         
-        # modified to make GT all in search_scope and not empty
         labels = list(set(search_scope).intersection(set(contributor_labels[src_idx])))
         if len(labels) == 0:
             continue

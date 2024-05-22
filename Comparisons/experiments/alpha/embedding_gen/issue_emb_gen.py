@@ -1,15 +1,5 @@
 #!/usr/bin/env python3 
 
-'''
-    TODO never run! 
-
-    Try with a few demos, 
-    and then do it on the whole dataset. 
-
-    Good luck! 
-'''
-
-
 import json
 from typing import Dict, List, Any, Optional, TypedDict, Generator, Tuple
 from gensim.models.doc2vec import Doc2Vec
@@ -27,21 +17,6 @@ import nltk
 import os
 import pickle
 from tqdm import tqdm
-
-# TODO 这应该是一个临时的文件. 等数据准备好了, 
-# 考虑把他和 issue_emb_gen.py 的内容整合到一起. 
-
-'''
-    注意安装的 gensim 的版本: 
-        pip install gensim\<4.0.0
-    > gensim 在 4.0.0 的版本中, 把一个叫 dv 的属性删除了. 
-
-    作为一个对比实验, 
-    参考了人家论文中的代码.
-
-    @see also: 
-        https://github.com/ExpertiseModel/EmbeddingVectors
-'''
 
 cfg_general = load_yaml_cfg()['general']
 cfg = load_yaml_cfg()['alpha']
@@ -113,17 +88,6 @@ class ContributorIssueEmbedding:
 
     def convert(self, user_name: str) -> np.ndarray: 
 
-        '''
-            (解释输入参数)
-            和 repo 的逻辑不同, issue 在做嵌入表达的时候是没有使用bio的. 
-            不过为了和 ContributorRepoEmbedding 保持一致, 所以这里还是保留了 user_name 这个参数. 
-
-            what we need: 
-            1. issue content;
-            2. issue title; 
-            3. (辅助) issue_idx
-        '''
-
         # step 2: prepare issues
 
         proposals = self.proposals
@@ -133,8 +97,6 @@ class ContributorIssueEmbedding:
         user_idx = user2idx[user_name]
         issue_indices = proposals.get(user_idx) 
         if issue_indices is None: 
-            # 开发者没有提过 issue 的情况还是挺多的. 107661 / 394474 (27.29%). 
-            # print(f'Warning: developer {user_name} ({user_idx}) has never propose an issue.')
             return np.array(self.model.infer_vector([]))
         issues: List[str]       = (idx2issue[it] for it in issue_indices)
         issues: List[str]       = (it for it in issues if it is not None)
@@ -168,9 +130,9 @@ class ContributorIssueEmbedding:
             words = ContributorIssueEmbedding.words 
         except: 
             words = ContributorIssueEmbedding.words \
-                = set(nltk.corpus.words.words())  # 大概是英文单词构成的集合; 会在后面筛选英文单词的时候用到. 
+                = set(nltk.corpus.words.words())  
 
-        def newline(text):  # copied. 这个函数的意思其实是移除多余的空行. 
+        def newline(text): 
             return '\n'.join([p for p in re.split(r'\\n|\\r|\\n\\n|\\r\\n|\r\n', text) if len(p) > 0])
 
         text = '\n'.join([issue_title, newline(issue_content)])

@@ -1,14 +1,5 @@
 #!/usr/bin/env python3 
 
-'''
-这个脚本用于将 {pr,issue,repo}_embedding_gen.py 中生成生成的向量, 
-拼接到一起, 作为开发者的向量. 
-
-主要内容:
-1. 寻找到与开发者关联的 issue, pr, repo;
-2. 聚合每一部分的向量 (avg): 
-3. 将三部分向量拼接到一起. 
-'''
 
 import numpy as np
 from typing import *
@@ -22,9 +13,7 @@ class AggregateDeveloperEmbedding:
         self.contributor_count = contributor_count
 
     def merged_embedding(self, filepath: Optional[str]) -> torch.FloatTensor: 
-        '''
-        生成开发者的向量. 每行是一个开发者的嵌入
-        '''
+ 
         if filepath is not None and os.path.exists(filepath): 
             print(f'Contributor embedding already exists, loading.')
             return torch.load(filepath)
@@ -146,9 +135,7 @@ class AggregateDeveloperEmbedding:
         
 
     def _load_relationship(self, filepath: str) -> List[List[str]]: 
-        '''
-        从指定文件中加载关系
-        '''
+ 
         def seq() -> Iterable[List[str]]:
             with open(filepath) as fp:  
                 for line in fp: 

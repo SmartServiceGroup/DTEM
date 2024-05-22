@@ -93,7 +93,6 @@ if __name__ == "__main__":
         
         output = sorted(output.items(), key=lambda x: x[1], reverse=True)
         output = [x[0] for x in output[:20]]
-        # print(output)
         rets = np.zeros(21).tolist()
         for i in range(1, 21):
             rets[i] = rets[i - 1]

@@ -38,12 +38,12 @@ def set_timeout(num):
  
         def to_do(*args, **kwargs):
             try:
-                signal.signal(signal.SIGALRM, handle)  # 设置信号和回调函数
-                signal.alarm(num)  # 设置 num 秒的闹钟
+                signal.signal(signal.SIGALRM, handle)  
+                signal.alarm(num)  
                 r = func(*args, **kwargs)
-                signal.alarm(0)  # 关闭闹钟
+                signal.alarm(0) 
                 return r
-            # 超时返回
+            
             except RuntimeError as e:
                 return None
  
@@ -72,13 +72,10 @@ class Crawler(object):
                 print(response.headers)
                 print(response)
             except requests.exceptions.ProxyError as e:
-                print("爬取速度过快了，休息一分钟")
                 time.sleep(60)
             except requests.exceptions.SSLError as e:
-                print("爬取速度过快了，休息一分钟")
                 time.sleep(60)
             except requests.exceptions.ConnectionError as e:
-                print("爬取速度过快了，休息一分钟")
                 time.sleep(60)
             else:
                 if response.status_code == 200:

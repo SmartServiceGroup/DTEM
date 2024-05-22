@@ -191,9 +191,6 @@ class RGCN(nn.Module):
             for etype in hg.etypes
         }))
 
-    # 记录一个bug，当图中的某一类型的节点只有出边时，message passing不会更新这个节点的表示
-    # 于是这个节点也不会在我们网络的返回结果中，但是采样子图中存在这个类型的节点，后面的应用就会出错
-    # 具体体现在LPscorer中，可能需要allow_zero_in_degree来处理
     def forward(self, blocks, node_feats, node_tids=None):
         if node_tids is None:
             node_tids = blocks[0].srcdata[dgl.NID]

@@ -38,7 +38,6 @@ def load_repo_prs() -> List[Tuple[int, int]]:
     with open(REPOSITORY_FILE_PATH) as fp: 
         repo_idxes = json.load(fp)
 
-    # len(contributor_idxes) = 394,474
     with open(REVIEWER_FILE_PATH) as fp: 
         reviewer_idxes = json.load(fp)
 
@@ -58,7 +57,6 @@ def load_repo_prs() -> List[Tuple[int, int]]:
     return ret
 
 
-# 使用train.json来训练CF，而不是全局信息
 def load_partial_repo_prs() -> List[Tuple[int, int]]:
     with open(PR_PARTIAL_FILE_PATH) as fp:
         prs = json.load(fp)

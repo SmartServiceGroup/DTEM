@@ -7,21 +7,6 @@ import dgl
 import torch
 from dgl.data.utils import save_graphs
 
-
-"""
-    这个文件修改自 GNN/DataPreprocess/2.build_structure_graph.py
-    改动是建图是删除 contributor_watch_repo 关系
-"""
-""" 
-    这个类也只在此文件中使用这一次. 
-    刚才第一步中 1.load_crawled_data 做了数据处理, 
-    接下来构建图. 
-
-    (还没有针对节点的 embedding 做训练)
-
-        GNN/DataPreprocess/full_graph/content => Comparisons/data/beta/structure_graph_without_watch.bin
-"""
-
 class GraphBuilder(object):
 
     def __init__(self, src_graph_dir) -> None:

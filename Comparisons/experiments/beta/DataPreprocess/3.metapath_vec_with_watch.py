@@ -14,19 +14,6 @@ from torch.utils.data.dataloader import DataLoader
 
 from tqdm import tqdm
 
-"""
-    这个文件修改自 GNN/DataPreprocess/3.build_structure_graph.py
-
-    只运行一次. 
-    用 metapath_vec 训练节点的 embedding.
-    这个工作的结果将被放到 Comparisons/embedding/beta/node_metapath_embedding_without_watch.bin 中. 
-
-    Comparisons/data/beta/structure_graph_without_watch.bin => Comparisons/embedding/beta/node_metapath_embedding_without_watch.bin
-
-    补充: 
-        运行时, 会首先读条(猜测是加载数据), 然后使用GPU训练. 
-"""
-
 if __name__ == "__main__":
     src_structure_graph = "Comparisons/data/beta/structure_graph_with_watch.bin"
     hg = load_graphs(src_structure_graph)[0][0]

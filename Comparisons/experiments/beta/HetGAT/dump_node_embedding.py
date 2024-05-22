@@ -21,7 +21,7 @@ class ParameterNamespace():
         if not special_suffix:
             sys.exit(0)
         now = time.strftime("%Y,%m,%d,%H,%M,%S")
-        self.checkpoint_dir = f"./checkpoint/{special_suffix}_{now}/"   # 不需要使用
+        self.checkpoint_dir = f"./checkpoint/{special_suffix}_{now}/"   
         if not os.path.exists(self.checkpoint_dir):
             os.mkdir(self.checkpoint_dir)
         

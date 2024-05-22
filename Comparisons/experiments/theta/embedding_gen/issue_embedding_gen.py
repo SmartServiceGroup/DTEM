@@ -26,7 +26,7 @@ class RepoDict(TypedDict):
     name:   str
     tags:   List[str]
     topic:  str
-    readme: str         # 本来应该也有这个的, 但数据实在是太大了. 重新复制一份也没有意义. 
+    readme: str       
 
 ElemType = Literal['index', 'issue', 'devloper', 'repository']
 
@@ -140,10 +140,7 @@ class IssueEmbeddings():
         print('OK, new issue embedding file generated.')
 
     def post_precess(self): 
-        '''
-        将 issue 的 embedding 转换为 pytorch 的格式.
-        '''
-
+ 
         FILE_PREFIX = 'data/issue_embedding'
         with open(f'{FILE_PREFIX}/issue_embeddings.pkl', 'rb') as fp: 
             data = pickle.load(fp)

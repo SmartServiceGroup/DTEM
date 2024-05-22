@@ -54,11 +54,7 @@ class PREmbedder():
         return repo_text_embeddings  # len(*): 378415 
 
     def original_code_embedding(self) -> Dict[str, np.ndarray]:  # Array<768>
-        '''
-        考虑到新生成嵌入的时间实在是太长了, 
-        所以先备用一个原来的嵌入的版本
-        @bad_manner: copied from repo_embedding_gen.py (modified)
-        '''
+ 
         with open(f'{FILE_PREFIX}/original_code.pkl', 'rb') as fp:   # TODO check file existence
             return pickle.load(fp)  # JSON <| { $repo_name: Array<768> }
     
@@ -86,13 +82,7 @@ class PREmbedder():
             device=torch.device('cpu'),
             use_old_code_embedding: bool,
         ) -> torch.Tensor:
-        '''
-        注意, 这里的向量, 已经开始转换为编号了. 
-        @see also: 
-            * GNN/DataPreprocess/4.add_node_feature.py    
-            * GNN/DataPreprocess/utils.py
-        @bad manner: copied from repo_embedding_gen.py (modified)
-        '''
+ 
 
         text_emb = self.text_embedding()
         code_emb = self.original_code_embedding() if use_old_code_embedding else self.new_code_embedding()
@@ -115,11 +105,6 @@ class PREmbedder():
         #   * text : 1081
         #   * code : 207,697 (???)
 
-        # 对 code 缺失这么多的解释 (original_code_embedding)
-        # 我只能进一步解释说明. 
-        # `len(code_emb) == 617,885`, 是比 `pr_idx` 中的 379,496 多得多的. 
-        # 但他们的交集只有171,799, 才占 pr_idx 的 45.27%. 
-        # 这个数量是肯定不够的. 我们只能寄希望于后续实验了. 
         return torch.cat([text_emb, code_emb], dim=1)
 
 if __name__ == '__main__': 

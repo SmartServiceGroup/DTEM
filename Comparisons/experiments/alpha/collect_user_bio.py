@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-'''
-    真不妙, 用户的 bio 信息也是缺失的. 
-'''
 from tqdm import tqdm
 from Comparisons.experiments.general import \
     github_token, load_contributor_index, \

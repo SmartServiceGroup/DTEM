@@ -32,31 +32,6 @@ def load_data(filepath: str) -> List[Tuple[int, int, int]]:
     with open(filepath) as fp: 
         return json.load(fp)
 
-# def load_repo_maintainers() -> List[Tuple[int, int]]: 
-#     with open(REPOSITORY_FILE_PATH) as fp: 
-#         repo_idxes = json.load(fp)
-
-#     with open(MAINTAINER_FILE_PATH) as fp: 
-#         maintainer_idxes = json.load(fp)
-
-#     with open(REPO_FILE_PATH) as fp: 
-#         def convert(line: str): 
-#             repo_info = json.loads(line)
-#             repo_name = repo_info["full_name"].lower()
-#             maintainer_name = repo_info["owner"]["login"]
-#             return repo_name, maintainer_name
-#         prs = [convert(it) for it in fp.readlines()]
-    
-#     ret: List[Tuple[int, int]] = []
-#     print("Loading all Repos")
-#     for repo_name, maintainer_name in tqdm(prs): 
-#         if repo_name not in repo_idxes or maintainer_name not in maintainer_idxes:
-#             continue
-#         ret.append([repo_idxes[repo_name], maintainer_idxes[maintainer_name]])
-#     return ret
-
-
-# 使用train.json来训练CF，而不是全局信息
 def load_partial_user1_user2() -> List[Tuple[int, int]]:
     with open(REPO_PARTIAL_FILE_PATH) as fp:
         prs = json.load(fp)

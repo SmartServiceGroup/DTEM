@@ -18,21 +18,6 @@ import os
 import pickle
 from tqdm import tqdm
 
-# TODO 这应该是一个临时的文件. 等数据准备好了, 
-# 考虑把他和 issue_emb_gen.py 的内容整合到一起. 
-
-'''
-    注意安装的 gensim 的版本: 
-        pip install gensim\<4.0.0
-    > gensim 在 4.0.0 的版本中, 把一个叫 dv 的属性删除了. 
-
-    作为一个对比实验, 
-    参考了人家论文中的代码.
-
-    @see also: 
-        https://github.com/ExpertiseModel/EmbeddingVectors
-'''
-
 cfg = load_yaml_cfg()['alpha']
 
 
@@ -75,7 +60,7 @@ class ContributorRepoEmbedding:
         if repo_indices is None: 
             print(f'Warning: developer {user_name} ({user_idx}) has no repo contributed.')
             repo_indices = []
-            pass  # WHAT? 我们会有这样的数据吗? (没有贡献过仓库的开发者)
+            pass  
         repos: List[str] = [idx2repo[it] for it in repo_indices]
 
         # step 3. convert repo_names to RepoDict
@@ -108,7 +93,7 @@ class ContributorRepoEmbedding:
     
 
     def _tokenize_repo(self,
-            bio: str,           # 用户个人简介
+            bio: str,         
             repo_tags: List[str],
             repo_topic: str, 
             repo_readme: str
@@ -125,22 +110,18 @@ class ContributorRepoEmbedding:
             Mostly transcriptted from their_repo -> Dev2Vec_data_load_clean.ipynb. 
         '''
 
-        words = set(nltk.corpus.words.words())  # 大概是英文单词构成的集合; 会在后面筛选英文单词的时候用到. 
+        words = set(nltk.corpus.words.words())  #
 
-        def newline(text):  # copied. 这个函数的意思其实是移除多余的空行. 
+        def newline(text):
             return '\n'.join([p for p in re.split(r'\\n|\\r|\\n\\n|\\r\\n|\r\n', text) if len(p) > 0])
 
         repo_tags   = str(repo_tags)
         repo_topic  = newline(repo_topic)
         repo_readme = newline(repo_readme)
 
-        # I know it's kind of weird, 
-        # but it's just the compared paper's authors' code. 
         text = '\n'.join([bio, repo_tags, repo_topic, repo_readme])
         gen = text.split()
         
-        # 这句话在原代码中 (Dev2vec_data_load_clean.ipynb), 
-        # 包含了: token_in_sentence(), flattern_list() 两个函数的功能. 
         gen = (it.lower() for doc in gen for it in tokenize(doc, lower=True))  # token stream
 
         tokens: List[str] = preprocess_string(
@@ -151,7 +132,7 @@ class ContributorRepoEmbedding:
         return list(tokens)
 
 
-def main():   # 这个看起来需要花很多时间啊. 
+def main():
     klee = ContributorRepoEmbedding()
 
     devlopers = load_contributor_index().keys()

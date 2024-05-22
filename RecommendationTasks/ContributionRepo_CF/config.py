@@ -39,39 +39,10 @@ for it in {
 
 
 def load_data(filepath: str) -> List[Tuple[int, int, int]]: 
-    """
-        see also: 
-            RecommendationTasks/ContributionRepo_CF/metric/metric.py
-        
-        这个函数加载的数据对应 实验4. 
-        
-        This function is used to load such these 4 files: 
-            - TEST_DATA_FILE_PATH
-            - TRAIN_DATA_FILE_PATH
-            - VALID_DATA_FILE_PATH
-
-        
-        for each element `it` in ret: 
-        it[0]: contributor id
-        it[1]: a positive repo id
-        it[2]: a negative repo id
-
-        hint: In this directory (RecommendationTasks/ContributionRepo_CF/), 
-        we ignore negative repo (i.e. it[2]).
-    """
     with open(filepath) as fp: 
         return json.load(fp)
 
 def load_repo_contributions() -> List[Tuple[int, int, int]]: 
-
-    """
-        see also: 
-            RecommendationTasks/ContributionRepo_CF/metric/metric.py
-        对应其中的 实验3. 
-
-        [DELETING] 这个实验有问题, 这个函数调起的数据和训练 model.bin 的不符. 
-            应该去掉此实验, 此函数也没用了. [/]
-    """
 
     with open(REPOSITORY_FILE_PATH) as fp: 
         repo_idxes = json.load(fp)

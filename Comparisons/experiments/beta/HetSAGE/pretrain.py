@@ -168,7 +168,6 @@ def train(model, lp_scorer, train_dataloader, eval_dataloader, test_dataloader, 
         link_prediction_rights = 0
         link_prediction_totals = 0
 
-        # For tongji
         lp_category_rights = {}
         lp_category_totals = {}
 

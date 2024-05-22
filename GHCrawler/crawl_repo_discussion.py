@@ -1,4 +1,4 @@
-import requests  # 导入requests包
+import requests 
 import json
 from shutil import copyfile
 import time
@@ -11,7 +11,7 @@ from path import SELECTED_REPO_PATH
 
 
 dst_filename = 'repo_discussion.txt'
-token = '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'
+token = ''
 
 headers = {
     "Authorization": f"Bearer {token}",

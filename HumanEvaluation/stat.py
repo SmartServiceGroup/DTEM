@@ -11,7 +11,7 @@ for task in tasks:
         result[task_model] = []
 
 num_result = 10
-num_data = 3        # 同一个model-task有3个数据点
+num_data = 3        
 for result_index in range(num_result):
     result_file = config.RESULT_PREFIX + "{}.txt".format(result_index)
     with open(result_file, 'r') as f:

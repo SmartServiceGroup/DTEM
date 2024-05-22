@@ -1,8 +1,4 @@
 general:
-  # 常用信息
-  # 1. 总开发者的数量: 394474
-  # 2. 总的pr的数量:  
-
   basepath: '/media/dell/disk/vkx/DTEM/'
   filepath: 
 
@@ -21,7 +17,6 @@ general:
     linguist_file:        'Comparisons/data/alpha/languages.yml'
   
   tokens: 
-    - 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  # VKX-bot-2
 
 
 alpha: 
@@ -79,7 +74,6 @@ alpha:
         valid_file: 'RecommendationTasks/SimDeveloper/data/valid.json'
         test_file:  'RecommendationTasks/SimDeveloper/data/test.json'
 
-        # 这个是专门在验证的过程中使用的. 
         valid_test_file: 'RecommendationTasks/SimDeveloper/metric/data/dataset_valid_test.json'
       model:
         model_file: 'Comparisons/model/alpha/sim_developer/model.bin'
@@ -101,12 +95,6 @@ beta:
 
 
 gamma: 
-  filepath:
-    data: 
-      graph: # TODO
-    embedding: 
-    model: 
-
   train: 
     lr: 0.001
     epochs: 40

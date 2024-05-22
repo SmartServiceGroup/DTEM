@@ -20,14 +20,6 @@ def analysis(topks):
             break
     return top1, top3, top5, top10, mrr
 
-"""
-## Model RESULT
-0.121 0.298 0.414 0.618 0.260
-
-## on modified dataset
-0.12998712998713 0.305019305019305 0.4491634491634492 0.703989703989704 0.2850200997425676
-27.931788931788933
-"""
 
 if __name__ == "__main__":
     src_file = "./result/model_result_valid_test_modified.json"

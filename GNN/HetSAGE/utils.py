@@ -152,9 +152,6 @@ def prepare_dataloader_for_er(hg, etype, fanouts, batch_size, use_gpu, device):
     
     # sampler = dgl.dataloading.MultiLayerFullNeighborSampler(2)
     sampler = dgl.dataloading.NeighborSampler(fanouts, replace=False)
-    """
-    exclue="self" 删除在minibatch中出现的边，这样的预测总不会有任何问题
-    """
     train_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")
     val_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")
     test_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")
@@ -205,9 +202,6 @@ def prepare_dataloader_for_lp(hg, fanouts, batch_size, negative_samples, use_gpu
     
     # sampler = dgl.dataloading.MultiLayerFullNeighborSampler(2)
     sampler = dgl.dataloading.NeighborSampler(fanouts, replace=False)
-    """
-    exclude="self" 删除在minibatch中出现的边，这样的预测总不会有任何问题
-    """
     train_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, negative_sampler=dgl.dataloading.negative_sampler.Uniform(negative_samples), exclude="self")
     val_sampler =   dgl.dataloading.as_edge_prediction_sampler(sampler, negative_sampler=dgl.dataloading.negative_sampler.Uniform(negative_samples), exclude="self")
     test_sampler =  dgl.dataloading.as_edge_prediction_sampler(sampler, negative_sampler=dgl.dataloading.negative_sampler.Uniform(negative_samples), exclude="self")
@@ -264,9 +258,6 @@ def prepare_dataloader_for_ec_specific(hg, etype, label_key, fanouts, batch_size
     
     # sampler = dgl.dataloading.MultiLayerFullNeighborSampler(2)
     sampler = dgl.dataloading.NeighborSampler(fanouts, replace=False)
-    """
-    exclue="self" 删除在minibatch中出现的边，这样的预测总不会有任何问题
-    """
     train_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")
     val_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")
     test_sampler = dgl.dataloading.as_edge_prediction_sampler(sampler, exclude="self")

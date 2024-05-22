@@ -58,7 +58,6 @@ def load_repo_maintainers() -> List[Tuple[int, int]]:
     return ret
 
 
-# 使用train.json来训练CF，而不是全局信息
 def load_partial_repo_maintainers() -> List[Tuple[int, int]]:
     with open(REPO_PARTIAL_FILE_PATH) as fp:
         prs = json.load(fp)

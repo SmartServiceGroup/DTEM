@@ -73,12 +73,12 @@ def set_timeout(num):
  
         def to_do(*args, **kwargs):
             try:
-                signal.signal(signal.SIGABRT, handle)  # 设置信号和回调函数
-                signal.alarm(num)  # 设置 num 秒的闹钟
+                signal.signal(signal.SIGABRT, handle)  
+                signal.alarm(num)  
                 r = func(*args, **kwargs)
-                signal.alarm(0)  # 关闭闹钟
+                signal.alarm(0)  
                 return r
-            # 超时返回
+            
             except RuntimeError as e:
                 return False
  

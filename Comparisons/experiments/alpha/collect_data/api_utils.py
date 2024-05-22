@@ -31,9 +31,7 @@ def get_contr_prs() -> Dict[int, List[str]]:
 
 if True:
 # if __name__ == '__main__': 
-    '''
-    数量少得可怜啊! 只有95532个开发者是有pr过的. 这算什么事儿嘛! (总共有394474个开发者, 1/4 左右)
-    '''
+ 
     # len(get_contr_prs()) == 95532 
     with open(api_cfg['dst']['contributor_api_names_file'], 'wb') as fp: 
         pickle.dump(get_contr_prs(), fp)

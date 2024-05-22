@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
 
-'''
-原来的实验中, 仓库的向量组成是: 
-E_{NL} ++ E_{CL} ++ E_{T} ++ E_{L}
-(自然语言, 代码块, 主题, 语言)
-后两者直接复用 ###### 中的结果, 只用 llama3 对前两者做嵌入. 
-
-'''
-
 import json
 from tqdm import tqdm
 from llama3_embedding import Llama3Embedder
@@ -55,10 +47,7 @@ class RepositoryEmbedding:
 
     # never tested
     def original_code_embedding(self) -> Dict[str, np.ndarray]:  # Array<768>
-        '''
-        考虑到新生成嵌入的时间实在是太长了, 
-        所以先备用一个原来的嵌入的版本
-        '''
+ 
         with open('data/repo_embedding/original_code.pkl', 'rb') as fp: 
             return pickle.load(fp)  # JSON <| { $repo_name: Array<768> }
     
@@ -79,13 +68,7 @@ class RepositoryEmbedding:
 
 
     def discrete_embedding(self) -> Tuple[Dict[str, np.ndarray], Dict[str, np.ndarray]]: 
-        '''
-        这块儿直接复用原来的结果就可以. 
-        离散的数据有两部分:
-        1. E_{T}: T is for Topic;
-        2. E_{L}: L is for Language.
-        它们也是以 JSON <| { $project_name: Vector<*> } 的形式组织的.
-        '''
+ 
         topic_filepath    = f'{FILE_PREFIX}/topic.pkl'      # 256
         lanugage_filepath = f'{FILE_PREFIX}/language.pkl'   # 256
 
@@ -103,12 +86,7 @@ class RepositoryEmbedding:
             device=torch.device('cpu'),
             use_old_code_embedding: bool,
         ) -> torch.Tensor:
-        '''
-        注意, 这里的向量, 已经开始转换为编号了. 
-        @see also: 
-            * GNN/DataPreprocess/4.add_node_feature.py    
-            * GNN/DataPreprocess/utils.py
-        '''
+ 
         text_emb = self.text_embedding()
         topic_emb, lang_emb = self.discrete_embedding()
         code_emb = self.original_code_embedding() if use_old_code_embedding else self.new_code_embedding()

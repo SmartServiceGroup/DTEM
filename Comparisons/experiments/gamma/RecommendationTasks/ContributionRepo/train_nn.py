@@ -6,21 +6,6 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
 
-'''
-用 gamma 做下游任务.  
-
-@see also: 
-    - RecommendationTask/ContributorRepo/train_nn.py
-'''
-
-# TODO DELETE THIS
-# 和 baseline.py 的区别: 
-# 1. 使用的模型文件不同 (bin/{baseline.bin,model.bin})
-# 2. 数据的特征数量不同 (此为512), 来源也不同 
-#   - baseline 是用pickle加载的, 在 ../TopicEmbedding/embed/{contributor,repo}_tpoic_embedding.pkl
-#   - train_nn 是用torch加载的, 来自 ../../GNN/HetSAGE/node_embedding/HetSAVE_node_embedding.bin
-# 3. batch_size不同: 那个是64, 这个是32.
-
 class Net(nn.Module):
     def __init__(self, embedding_dim):
         super(Net, self).__init__()

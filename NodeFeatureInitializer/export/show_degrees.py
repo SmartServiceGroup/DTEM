@@ -3,15 +3,6 @@
 import pickle
 import sys
 
-"""
-    这个文件是用来查看*.pkl文件中的数据的维度的.
-
-    UseCase: 
-        `python show_degrees.py pr_text_embedding.pkl`
-    Output:
-        len(item) = 768
-"""
-
 def show_degrees(file: str):
     with open(file, 'rb') as f:
         print("loading file...")

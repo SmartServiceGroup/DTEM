@@ -16,15 +16,6 @@ from github.Repository import Repository
 from tqdm import tqdm
 import os, sys
 
-'''
-    收集数据. 
-    原本的项目是以仓库为 key 组织的. 
-    但我们想要复现的这个论文, 是以开发者为 key 组织的各种数据. 
-
-    我们将 repo, issue, api 的信息, 组织起来, 
-    输出到 Comparisons/data/alpha 下. 
-'''
-
 # Repository:   Name, Tags, Topics, README
 # Issue:        Body & Title
 # API:          (appear at least 5 times)
@@ -35,12 +26,6 @@ cfg: Dict[str, Any] = load_yaml_cfg()['alpha']
 
 
 class RepoDataCrawler(): 
-    '''
-        爬出来的数据并不是齐全的. 
-        有 readme 的文件的数量是 44574 / 50k; 
-        有 topics 和 tags 的文件的数量是 49709 / 50k. 
-        所以后续注意, 要为这些没有的信息赋予初值. 
-    '''
 
     repos: Dict[str, RepoDict]
     repo_names: Dict[int, str]
@@ -68,10 +53,7 @@ class RepoDataCrawler():
 
 
     def get_repo_info(self, repo_name: str) -> RepoDict: 
-        '''
-            获取的结果会同时返回给调用方, 
-            也会添加到 repos 字典中. 
-        '''
+ 
         if repo_name in self.repos: 
             return self.repos[repo_name]
         
@@ -96,15 +78,6 @@ class RepoDataCrawler():
 
 class IssueDataCrawler: 
 
-    '''
-        可惜的是, 当时学长在爬取数据的时候没有把标题也爬取下来,
-        所以需要我们重新爬取. 
-
-        在数据源中, 我们已经有了 issue 所属仓库和 id. 
-        为了降低访问 github 的次数, 我们按照 repo 先将所有的 issue 聚合, 
-        然后再依次爬取. 
-    '''
-
     repo_issue_indices: Dict[str, List[int]]
 
     def __init__(self): 
@@ -120,10 +93,6 @@ class IssueDataCrawler:
         self.repo_issue_indices = ret
 
     def fetch_all(self, idx: int, total=4, gh_token_idx=None): 
-        '''
-            idx 和 total 是用来选择数据的: 选择total份中的第idx份数据来处理. 
-        '''
-
         # jsonl file
         # elem looks like: {'name': 'datalux/osintgram#670', 'title': '...'}
         stdout = cfg['raw']['issue_title_file_path'] + f'.{idx}'
@@ -155,9 +124,6 @@ class IssueDataCrawler:
         return repo.get_issue(issue_id).title
 
 idx = int(sys.argv[1])
-
-# klee = RepoDataCrawler()
-# klee.fetch_all()
 
 klee = IssueDataCrawler()
 klee.fetch_all(idx, total=4, gh_token_idx=idx)

@@ -26,10 +26,6 @@ cfg = load_yaml_cfg()['alpha']
 task_cfg = cfg['tasks']['sim_developer']
 
 
-'''
-这个文件自然是参考了: 
-        RecommendationTasks/SimDeveloper/metric/validate_model.py 
-'''
 def validate(device=torch.device('cpu')):
 
     feat_size = 580

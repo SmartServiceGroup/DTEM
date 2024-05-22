@@ -10,7 +10,7 @@ class RepoDict(TypedDict):
     name:   str
     tags:   List[str]
     topic:  str
-    readme: str         # 本来应该也有这个的, 但数据实在是太大了. 重新复制一份也没有意义. 
+    readme: str        
 
 class IssueDict(TypedDict): 
     name:    str  # e.g. datalux/osintgram#670
@@ -79,9 +79,6 @@ def file_readlines(filename: str, total: int=-1):
 
     return decorator
 
-'''
-    构建倒排表: Dict[A, B] => Dict[B, A]
-'''
 def dict_invert(d: Dict[Any, Any]) -> Dict[Any, Any]: 
     return { v: k for k, v in d.items() }
 
@@ -92,10 +89,6 @@ def dict_invert_mul(d: Dict[Any, Any]) -> Dict[Any, List[Any]]:
         ret[v].append(k)
     return ret
 
-'''
-    取字典的前k个元素看看. 
-    主要是中间过程为了确定是否执行正确做的. 
-'''
 def dict_inspect(d: Dict[Any, Any], size=3) -> Dict[Any, Any]: 
     return {k: v for (_, (k, v)) in zip(range(size), d.items())}
 
@@ -143,11 +136,6 @@ def pickle_dump(content, filename: str):
         pickle.dump(content, fp)
 
 
-
-'''
-    将数据分为 total 份, 
-    取其中的第 idx 份 (从0开始). 
-'''
 def data_divide(data: List[Any], idx: int, total: int) -> Generator[Any, None, None]:
     size = len(data)
     rng = range(idx * size // total, (idx + 1) * size // total)  # range

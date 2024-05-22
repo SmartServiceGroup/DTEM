@@ -8,13 +8,6 @@ from RecommendationTasks.SimDeveloper_CF.config import \
 
 
 def metric(model_prefix='full', partial=False): 
-    '''
-        读取 ../valiate.py 生成的文件, 并给出评价指标. 
-        指标的部分结果在此文件的其他注释中有统计. 
-
-        see also: 
-            ../validate.py -> evaluate()
-    '''
     if partial:
         model_prefix += '.partial'
     model_filepath = VALID_RESULT_PATH + '.' + model_prefix

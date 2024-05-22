@@ -7,10 +7,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
 
-# 建议将此文件和 train_nn.py 做对比. 
-# 参看 train_nn.py
 
-feat_size = 2383  # TODO how is this gotten? 
+feat_size = 2383  
 
 class Net(nn.Module):
     def __init__(self, embedding_dim):

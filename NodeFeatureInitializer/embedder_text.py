@@ -33,8 +33,7 @@ class TextDataset(Dataset):
         self.data = []
         with open(text_filepath, "r", encoding="utf-8") as inf:
             for line in inf:
-                # 需要数据每行为一个python dict，
-                # 且必须包含键值 text
+ 
                 text = json.loads(line)["text"]
                 # {"input_ids": [[tenosr element]], "attention_mask": [[tensor element]]}
                 encoded_input = tokenizer(text, return_tensors="pt")

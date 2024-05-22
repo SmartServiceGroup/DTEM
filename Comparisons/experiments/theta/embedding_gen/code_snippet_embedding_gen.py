@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
 
-'''
-先生成代码片段的嵌入备用, 
-然后才方便 仓库和PR的代码部分嵌入的生成. 
-
-@see also: 
-    + NodeFeatureInitializer/embed_repository_code.py
-    + NodeFeatureInitializer/embedder_code.py
-
-@related files: 
-    + ./data/code_snippet/{codes,result}
-'''
-
 from llama3_embedding import Llama3Embedder
 from typing import *
 import json
@@ -72,11 +60,6 @@ SRC_DIR = './data/code_snippet/codes'
 DST_DIR = './data/code_snippet/result'
 
 class ProecessManager(): 
-    '''
-    细节不重要. 这个类就是来管理代码片段的嵌入生成的.
-    比如哪个文件还没生成, 要怎么恢复之类的. 
-    '''
-
     def __init__(self, device): 
         all_files = os.listdir(SRC_DIR)
         tried_files = [it for it in os.listdir(DST_DIR)]
@@ -88,10 +71,6 @@ class ProecessManager():
         self.klee = CodeSnippetEmbedding(device)
 
     def next(self): 
-        '''
-        select a unfinish task and continue it 
-        (先不管生成一半的)
-        '''
         if self.files == []: 
             print('all tasks finished/tried.')
             return 
