@@ -7,12 +7,13 @@ Below shows the repository structure. The correspondence between the table resul
 .
 ├── Comparisons
 │   └── experiments
-│       ├── alpha		# run this to get the result compared with Dev2Vec, in Table 6, SimDeveloper/Dev2Vec Method
-│       ├── beta		# run this to get performance without watch in Table 6
-│       └── gamma		# run this to get the result of GAT Method results in Table 7. 
+│       ├── alpha		# run this to get the result compared with Dev2Vec, in Table 3 & 11, SimDeveloper/Dev2Vec Method
+│       ├── beta		# run this to get performance without watch in Table 9
+│       ├── gamma		# run this to get the result of GAT Method results in Table 4,5,11
+│       └── theta   # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
 ├── GHCrawler # run this to get the dataset in the research scope
 │   └── export
-├── GNN # run code here to get the detailed GNN performance in table 3 & table 4
+├── GNN # run code here to get the detailed GNN performance in table 7 & table 8
 │   ├── DataPreprocess
 │   ├── HGT
 │   │   └── pretrained
@@ -42,7 +43,7 @@ Below shows the repository structure. The correspondence between the table resul
 │       ├── tree-sitter-php
 │       ├── tree-sitter-python
 │       └── tree-sitter-ruby
-├── RecommendationTasks # run code here to get performance in 4 downstream recommendation tasks which is shown in table 6 & table 7
+├── RecommendationTasks # run code here to get performance in 4 downstream recommendation tasks which is shown in table 4 & table 5
 │   ├── ContributionRepo
 │   │   └── metric
 │   ├── ContributionRepo_CF
@@ -59,8 +60,8 @@ Below shows the repository structure. The correspondence between the table resul
 │   │   └── metric
 │   ├── SimDeveloper_CF
 │   │   └── metric
-│   └── TopicEmbedding # the baseline method in table 6 & table 7
-├── T-Test # run code here to get the t-test result in table 5
+│   └── TopicEmbedding # the baseline method in table 4 & table 5
+├── T-Test # run code here to get the t-test result in table 10
 │   ├── user_contribute_repository
 │   └── user_join_repository
 └── imgs

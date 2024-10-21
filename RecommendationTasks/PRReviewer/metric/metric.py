@@ -21,8 +21,14 @@ def analysis(topks):
     return top1, top3, top5, top10, mrr
 
 
+"""
+# model_2entities on modified dataset
+0.11454311454311454 0.2972972972972973 0.43114543114543114 0.7052767052767053 0.27353745157261283
+27.931788931788933
+"""
+
 if __name__ == "__main__":
-    src_file = "./result/model_result_valid_test_modified.json"
+    src_file = "./result/model_2entities_result_valid_test_modified.json"
     with open(src_file, "r", encoding="utf-8") as inf:
         src = json.load(inf)
     

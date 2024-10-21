@@ -34,8 +34,15 @@ Comparisons/experiments/gamma/RecommendationTasks/*.bin
 Comparisons/experiments/gamma/**/result.txt
 Comparisons/experiments/gamma/**/output.txt
 
+Comparisons/experiments/delta/bin/*
+Comparisons/experiments/delta/data/*
+Comparisons/experiments/delta/result/*
+Comparisons/experiments/delta/metric/*
+
+
 Comparisons/experiments/beta/**/*.txt
 RecommendationTasks/**/*.txt
+
 
 **/result.txt
 
@@ -46,3 +53,5 @@ GHCrawler/repo_lackof_readme.lst
 Comparisons/experiments/beta/result/HetSAGE/RecommendationTasks/Result.md
 RecommendationTasks/PRReviewer_CF/README.md    
 RecommendationTasks/RepoMaintainer_CF/README.md
+
+ignored/**
