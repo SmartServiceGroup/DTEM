@@ -75,6 +75,8 @@ if __name__ == "__main__":
     for contributor_idx, search_scope, labels in dataset:
         if len(labels) < 5:
             continue
+        print(f'{contributor_idx, search_scope, labels =}')
+        print(f'{contributor_embedding.shape = }')
         d = MyDataset(contributor_idx, search_scope, contributor_embedding)
         dataloader = DataLoader(d, batch_size=128, shuffle=False, collate_fn=collate_fn)
         model.eval()

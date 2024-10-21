@@ -60,7 +60,7 @@ class ParameterNamespace():
         self.use_self_loop = False  # whether to include self loop message in GNN
         self.dropout = 0.2  # dropout rate
         self.feat_drop = 0.2 # feature dropout rate
-        self.fanouts = [7,7,7,7] # fanout of each GNN layer
+        self.fanouts = [7,7,7,7] # fanout of each GNN layer 
         self.num_hidden_layers = len(self.fanouts) - 2 # number of hidden GNN layers other than input and output layer
         self.layer_norm = True  # whether to perform layer normalization before each GNN layer
         
