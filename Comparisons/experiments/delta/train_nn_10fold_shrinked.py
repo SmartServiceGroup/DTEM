@@ -128,27 +128,16 @@ def main(
     embeddings = pickle.load(open(embeddings_flp, 'rb'))
     embeddings = [embeddings[entity_name] for entity_name in entity_names]
 
-    # FIXME: Ugly approach! (ugly, but works)
-    # Depends on the fact that expect task `PRReviewer`, 
-    # all tasks just use two kinds of entities. 
-    if task_name != 'PRReviewer': 
-        emb_a, emb_b = embeddings
-        embedding_dim = emb_a.shape[1] + emb_b.shape[1]   # total input dim
-    else: 
-        emb_repo, emb_pr, emb_cont = embeddings 
-        embedding_dim = emb_repo.shape[1] + emb_pr.shape[1] + emb_cont.shape[1] 
+    emb_a, emb_b = embeddings
+    embedding_dim = emb_a.shape[1] + emb_b.shape[1]   # total input dim
     
     for i in range(K):
         train_sample_path = f'./data/{task_name}/10fold/train{i}.json'
         test_sample_path =  f'./data/{task_name}/10fold/test{i}.json'
         model_flp_local = model_flp + f'.{i:02d}'
 
-        if task_name != 'PRReviewer': 
-            train_dataset = MyDataset(samples=train_sample_path, embedding_a=emb_a, embedding_b=emb_b)
-            test_dataset  = MyDataset(samples=test_sample_path, embedding_a=emb_a, embedding_b=emb_b)
-        else: 
-            train_dataset = MyDatasetModified(samples=train_sample_path, repo_node_embedding=emb_repo, pr_embedding=emb_pr, contributor_embedding=emb_cont)
-            test_dataset  = MyDatasetModified(samples=test_sample_path,  repo_node_embedding=emb_repo, pr_embedding=emb_pr, contributor_embedding=emb_cont)
+        train_dataset = MyDataset(samples=train_sample_path, embedding_a=emb_a, embedding_b=emb_b)
+        test_dataset  = MyDataset(samples=test_sample_path, embedding_a=emb_a, embedding_b=emb_b)
     
         train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
         test_dataloader  = DataLoader(test_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
@@ -228,13 +217,6 @@ CONFIG = {
                         'model_flp':        'bin/shrinked/emb_v1/ContributionRepo/model.bin',
                         'device':           'cuda:0',
                     },
-                    'PRReviewer': {
-                        'task_name':        'PRReviewer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v1/entity_features.pkl',
-                        'result_flp':       'result/shrinked/emb_v1/PRF1/PRReviewer.txt',
-                        'model_flp':        'bin/shrinked/emb_v1/PRReviewer/model.bin',
-                        'device':           'cuda:0',
-                    }, 
                     'RepoMaintainer': {
                         'task_name':        'RepoMaintainer',
                         'embeddings_flp':   'data/shrinked_embeddings/emb_v1/entity_features.pkl',
@@ -258,13 +240,6 @@ CONFIG = {
                         'model_flp':        'bin/shrinked/emb_v1/ContributionRepo/model_wo_mp.bin',
                         'device':           'cuda:1',
                     },
-                    'PRReviewer': {
-                        'task_name':        'PRReviewer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v1/entity_features_wo_mp.pkl',
-                        'result_flp':       'result/shrinked/emb_v1/PRF1/PRReviewer_wo_mp.txt',
-                        'model_flp':        'bin/shrinked/emb_v1/PRReviewer/model_wo_mp.bin',
-                        'device':           'cuda:1',
-                    },
                     'RepoMaintainer': {
                         'task_name':        'RepoMaintainer',
                         'embeddings_flp':   'data/shrinked_embeddings/emb_v1/entity_features_wo_mp.pkl',
@@ -281,351 +256,10 @@ CONFIG = {
                     },
                 }
             }, 
-            'emb_v2': {
-                'with_mp': {
-                    'ContributionRepo': {
-                        'task_name':        'ContributionRepo',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/ContributionRepo.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/ContributionRepo/model.bin',
-                        'device':           'cuda:0',
-                    },
-                    'PRReviewer': {
-                        'task_name':        'PRReviewer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/PRReviewer.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/PRReviewer/model.bin',
-                        'device':           'cuda:0',
-                    }, 
-                    'RepoMaintainer': {
-                        'task_name':        'RepoMaintainer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/RepoMaintainer.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/RepoMaintainer/model.bin',
-                        'device':           'cuda:0',
-                    },
-                    'SimDeveloper': {
-                        'task_name':        'SimDeveloper',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/SimDeveloper.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/SimDeveloper/model.bin',
-                        'device':           'cuda:0',
-                    },
-                }, 
-                'without_mp': {
-                    'ContributionRepo': {
-                        'task_name':        'ContributionRepo',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features_wo_mp.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/ContributionRepo_wo_mp.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/ContributionRepo/model_wo_mp.bin',
-                        'device':           'cuda:0',
-                    },
-                    'PRReviewer': {
-                        'task_name':        'PRReviewer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features_wo_mp.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/PRReviewer_wo_mp.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/PRReviewer/model_wo_mp.bin',
-                        'device':           'cuda:0',
-                    },
-                    'RepoMaintainer': {
-                        'task_name':        'RepoMaintainer',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features_wo_mp.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/RepoMaintainer_wo_mp.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/RepoMaintainer/model_wo_mp.bin',
-                        'device':           'cuda:0',
-                    },
-                    'SimDeveloper': {
-                        'task_name':        'SimDeveloper',
-                        'embeddings_flp':   'data/shrinked_embeddings/emb_v2/entity_features_wo_mp.pkl',
-                        'result_flp':       'result/shrinked/emb_v2/PRF1/SimDeveloper_wo_mp.txt',
-                        'model_flp':        'bin/shrinked/emb_v2/SimDeveloper/model_wo_mp.bin',
-                        'device':           'cuda:0',
-                    },
-                }
-            },
-        },
-        'emb_blended': {
-            'our_method_contributor_gnn_only': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features.pkl',
-                    'result_flp':       'result/blended/PRF1/ContributionRepo_our_method.txt',
-                    'model_flp':        'bin/blended/ContributionRepo/model_our_method.bin',
-                    'device':           'cuda:0',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features.pkl',
-                    'result_flp':       'result/blended/PRF1/PRReviewer_our_method.txt',
-                    'model_flp':        'bin/blended/PRReviewer/model_our_method.bin',
-                    'device':           'cuda:0',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features.pkl',
-                    'result_flp':       'result/blended/PRF1/RepoMaintainer_our_method.txt',
-                    'model_flp':        'bin/blended/RepoMaintainer/model_our_method.bin',
-                    'device':           'cuda:0',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features.pkl',
-                    'result_flp':       'result/blended/PRF1/SimDeveloper_our_method.txt',
-                    'model_flp':        'bin/blended/SimDeveloper/model_our_method.bin',
-                    'device':           'cuda:0',
-                }
-            },
-            'ablation_with_mp': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/ContributionRepo_pca_mp.txt',
-                    'model_flp':        'bin/blended/ContributionRepo/model_pca_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/PRReviewer_pca_mp.txt',
-                    'model_flp':        'bin/blended/PRReviewer/model_pca_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/RepoMaintainer_pca_mp.txt',
-                    'model_flp':        'bin/blended/RepoMaintainer/model_pca_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/SimDeveloper_pca_mp.txt',
-                    'model_flp':        'bin/blended/SimDeveloper/model_pca_mp.bin',
-                    'device':           'cuda:0',
-                }
-            },
-            'ablation_without_mp': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_wo_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/ContributionRepo_pca_wo_mp.txt',
-                    'model_flp':        'bin/blended/ContributionRepo/model_pca_wo_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_wo_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/PRReviewer_pca_wo_mp.txt',
-                    'model_flp':        'bin/blended/PRReviewer/model_pca_wo_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_wo_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/RepoMaintainer_pca_wo_mp.txt',
-                    'model_flp':        'bin/blended/RepoMaintainer/model_pca_wo_mp.bin',
-                    'device':           'cuda:0',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/blended_embeddings/entity_features_pca_wo_mp.pkl',
-                    'result_flp':       'result/blended/PRF1/SimDeveloper_pca_wo_mp.txt',
-                    'model_flp':        'bin/blended/SimDeveloper/model_pca_wo_mp.bin',
-                    'device':           'cuda:0',
-                },
-            },
-        },
-        'emb_noise': {
-            'noise_scale_0.5': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.5_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.5/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/0.5/ContributionRepo/model.bin',
-                    'device':           'cuda:0',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.5_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.5/PRReviewer.txt',
-                    'model_flp':        'bin/noise/0.5/PRReviewer/model.bin',
-                    'device':           'cuda:0',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.5_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.5/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/0.5/RepoMaintainer/model.bin',
-                    'device':           'cuda:0',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.5_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.5/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/0.5/SimDeveloper/model.bin',
-                    'device':           'cuda:0',
-                },
-            },
-            'noise_scale_0.2': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.2_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.2/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/0.2/ContributionRepo/model.bin',
-                    'device':           'cuda:0',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.2_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.2/PRReviewer.txt',
-                    'model_flp':        'bin/noise/0.2/PRReviewer/model.bin',
-                    'device':           'cuda:0',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.2_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.2/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/0.2/RepoMaintainer/model.bin',
-                    'device':           'cuda:0',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.2_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.2/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/0.2/SimDeveloper/model.bin',
-                }
-            },
-            'noise_scale_0.7': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.7_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.7/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/0.7/ContributionRepo/model.bin',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.7_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.7/PRReviewer.txt',
-                    'model_flp':        'bin/noise/0.7/PRReviewer/model.bin',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.7_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.7/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/0.7/RepoMaintainer/model.bin',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.7_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.7/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/0.7/SimDeveloper/model.bin',
-                },
-            },
-            'noise_scale_1.0': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_1.0_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/1.0/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/1.0/ContributionRepo/model.bin',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_1.0_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/1.0/PRReviewer.txt',
-                    'model_flp':        'bin/noise/1.0/PRReviewer/model.bin',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_1.0_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/1.0/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/1.0/RepoMaintainer/model.bin',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_1.0_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/1.0/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/1.0/SimDeveloper/model.bin',
-                },
-            }, 
-            'noise_scale_0.3': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.3_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.3/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/0.3/ContributionRepo/model.bin',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.3_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.3/PRReviewer.txt',
-                    'model_flp':        'bin/noise/0.3/PRReviewer/model.bin',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.3_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.3/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/0.3/RepoMaintainer/model.bin',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.3_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.3/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/0.3/SimDeveloper/model.bin',
-                },
-            },
-            'noise_scale_0.4': {
-                'ContributionRepo': {
-                    'task_name':        'ContributionRepo',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.4_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.4/ContributionRepo.txt',
-                    'model_flp':        'bin/noise/0.4/ContributionRepo/model.bin',
-                },
-                'PRReviewer': {
-                    'task_name':        'PRReviewer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.4_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.4/PRReviewer.txt',
-                    'model_flp':        'bin/noise/0.4/PRReviewer/model.bin',
-                },
-                'RepoMaintainer': {
-                    'task_name':        'RepoMaintainer',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.4_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.4/RepoMaintainer.txt',
-                    'model_flp':        'bin/noise/0.4/RepoMaintainer/model.bin',
-                },
-                'SimDeveloper': {
-                    'task_name':        'SimDeveloper',
-                    'embeddings_flp':   'data/noise_embeddings/entity_features_0.4_noise.pkl',
-                    'result_flp':       'result/noise/PRF1/0.4/SimDeveloper.txt',
-                    'model_flp':        'bin/noise/0.4/SimDeveloper/model.bin',
-                },
-            },
         },
     },
 }
 
 
 if __name__ == "__main__":
-    print('Don\'t run this now!')
-    exit(1)
-
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_0.7']['ContributionRepo'])
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_0.7']['PRReviewer'])
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_0.7']['RepoMaintainer'])
-
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_1.0']['ContributionRepo'])
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_1.0']['PRReviewer'])
-    # main(**CONFIG['v1']['emb_noise']['noise_scale_1.0']['RepoMaintainer'])
-
-#  -------------------------------------------------------------------------------- 
-    import sys
-    [
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.3']['ContributionRepo']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.3']['PRReviewer']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.3']['RepoMaintainer']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.3']['SimDeveloper']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.4']['ContributionRepo']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.4']['PRReviewer']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.4']['RepoMaintainer']),
-        lambda: main(**CONFIG['v1']['emb_noise']['noise_scale_0.4']['SimDeveloper']),
-    ][int(sys.argv[1])]()
+    main(**CONFIG['v1']['emb_average']['emb_v1']['with_mp']['ContributionRepo'])

@@ -59,32 +59,6 @@ class MyDataset(Dataset):
         return self.data[idx]
 
 
-class MyDatasetModified(Dataset):
-    def __init__(self, samples, repo_node_embedding, pr_embedding, contributor_embedding) -> None:
-        super().__init__()
-        self.data = []
-        if isinstance(samples, str):
-            with open(samples, "r", encoding="utf-8") as inf:
-                samples = json.load(inf)
-        for sample in samples:
-            assert len(sample) == 4
-            repo_idx, pr_idx, pos_reviewer_idx, neg_reviewer_idx = sample
-            self.data.append([
-                torch.cat([repo_node_embedding[repo_idx], pr_embedding[pr_idx], contributor_embedding[pos_reviewer_idx]], dim=-1).numpy().tolist(),
-                1,
-            ])
-            self.data.append([
-                torch.cat([repo_node_embedding[repo_idx], pr_embedding[pr_idx], contributor_embedding[neg_reviewer_idx]], dim=-1).numpy().tolist(),
-                0,
-            ])
-    
-    def __len__(self):
-        return len(self.data)
-    
-    def __getitem__(self, idx):
-        return self.data[idx]
-
-
 def collate_fn(batch):
     samples = []
     labels = []
@@ -133,7 +107,6 @@ if __name__ == "__main__":
         | dst_file | node_embedding_path | entity_names              | task_name        |
         |----------|---------------------|---------------------------|------------------|
         | [2]      | [1]                 | contributor,repository    | ContributionRepo |
-        |          |                     | repository,pr,contributor | PRReviewer       |
         |          |                     | repository,contributor    | RepoMaintainer   |
         |          |                     | contributor,contributor   | SimDeveloper     |
         |----------|---------------------|---------------------------|------------------|
@@ -159,27 +132,16 @@ if __name__ == "__main__":
     embeddings = load_embeddings(node_embedding_path, entity_names)
 
 
-    # FIXME: Ugly approach! (ugly, but works)
-    # Depends on the fact that expect task `PRReviewer`, 
-    # all tasks just use two kinds of entities. 
-    if task_name != 'PRReviewer': 
-        emb_a, emb_b = embeddings
-        embedding_dim = emb_a.shape[1] + emb_b.shape[1]   # total input dim
-    else: 
-        emb_repo, emb_pr, emb_cont = embeddings 
-        embedding_dim = emb_repo.shape[1] + emb_pr.shape[1] + emb_cont.shape[1] 
+    emb_a, emb_b = embeddings
+    embedding_dim = emb_a.shape[1] + emb_b.shape[1]   # total input dim
     
     for i in range(K):
         train_sample_path = f'./data/{task_name}/10fold/train{i}.json'
         test_sample_path = f'./data/{task_name}/10fold/test{i}.json'
         model_path = f'./bin/{task_name}_{dst_file}_{i:02d}.bin'
 
-        if task_name != 'PRReviewer': 
-            train_dataset = MyDataset(samples=train_sample_path, embedding_a=emb_a, embedding_b=emb_b)
-            test_dataset  = MyDataset(samples=test_sample_path, embedding_a=emb_a, embedding_b=emb_b)
-        else: 
-            train_dataset = MyDatasetModified(samples=train_sample_path, repo_node_embedding=emb_repo, pr_embedding=emb_pr, contributor_embedding=emb_cont)
-            test_dataset = MyDatasetModified(samples=test_sample_path, repo_node_embedding=emb_repo, pr_embedding=emb_pr, contributor_embedding=emb_cont)
+        train_dataset = MyDataset(samples=train_sample_path, embedding_a=emb_a, embedding_b=emb_b)
+        test_dataset  = MyDataset(samples=test_sample_path, embedding_a=emb_a, embedding_b=emb_b)
     
         train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
         test_dataloader  = DataLoader(test_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
@@ -259,8 +221,6 @@ This table gives out params run on this script.
 | result_SimDeveloper_wo_mp.txt     | ../../../GNN/DataPreprocess/full_graph/structure_graph_with_average_feature_without_metapath.bin | contributor,contributor   | SimDeveloper     |        |
 | result_ContributionRepo_wo_mp.txt | ../../../GNN/DataPreprocess/full_graph/structure_graph_with_average_feature_without_metapath.bin | contributor,repository    | ContributionRepo | 0      |
 | result_ContributionRepo_mp.txt    | ../../../GNN/DataPreprocess/full_graph/structure_graph_with_average_feature_with_metapath.bin    | contributor,repository    | ContributionRepo | 0      |
-| result_PRReviewer_mp.txt          | ../../../GNN/DataPreprocess/full_graph/structure_graph_with_average_feature_with_metapath.bin    | repository,pr,contributor | PRReviewer       | 0      |
-| result_PRReviewer_wo_mp.txt       | ../../../GNN/DataPreprocess/full_graph/structure_graph_with_average_feature_without_metapath.bin | repository,pr,contributor | PRReviewer       | 0      |
 |-----------------------------------|--------------------------------------------------------------------------------------------------|---------------------------|------------------|--------|
 
 for example, for line 1, we actually run: 

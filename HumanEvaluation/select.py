@@ -6,7 +6,6 @@ num_selection = 30
 
 data = {
     'ContributionRepo' : [],
-    'PRReviewer': [],
     'RepoMaintainer': [],
     'SimDeceloper': []
 }
@@ -49,8 +48,6 @@ for task in config.RecommendationTasks:
             
     if task == 'ContributionRepo':
         result = [[id, contributors[id], rec_id, repositories[rec_id], model] for id, rec_id, model in result]
-    elif task == 'PRReviewer':
-        result = [[id, prs[id], rec_id, contributors[rec_id], model] for id, rec_id, model in result]
     elif task == 'RepoMaintainer':
         result = [[id, repositories[id], rec_id, contributors[rec_id], model] for id, rec_id, model in result]
     elif task == 'SimDeveloper':

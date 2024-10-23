@@ -58,14 +58,6 @@ def main(src_file):
 
 
 if __name__ == "__main__":
-    files = [
-        # 'result/noise/HR/0.7/ContributionRepo.txt',
-        'result/noise/HR/0.7/PRReviewer.txt',
-        # 'result/noise/HR/0.7/RepoMaintainer.txt',
-
-        # 'result/noise/HR/1.0/ContributionRepo.txt',
-        'result/noise/HR/1.0/PRReviewer.txt',
-        # 'result/noise/HR/1.0/RepoMaintainer.txt',
-    ]
+    files = []
     for it in files: 
         main(it)

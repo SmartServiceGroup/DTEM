@@ -1,6 +1,5 @@
 RecommendationTasks = [
     'ContributionRepo',
-    'PRReviewer',
     'RepoMaintainer',
     'SimDeveloper'
 ]
@@ -8,7 +7,6 @@ RecommendationTasks = [
 
 PREFIX = {
     'ContributionRepo': './ContributionRepo/',
-    'PRReviewer':'./PRReviewer/',
     'RepoMaintainer':'./RepoMaintainer/',
     'SimDeveloper':'./SimDeveloper/'
 }
@@ -19,11 +17,6 @@ SUFFIX = {
         'DTEM',
         'GAT',
         'Topic',
-    ],
-    'PRReviewer' : [
-        'CF',
-        'DTEM',
-        'GAT'
     ],
     'RepoMaintainer' : [
         'CF',
@@ -42,7 +35,6 @@ SUFFIX = {
 
 SELECTED_DATA = {
     'ContributionRepo': './selected/ContributionRepo.json',
-    'PRReviewer':'./selected/PRReviewer.json',
     'RepoMaintainer':'./selected/RepoMaintainer.json',
     'SimDeveloper':'./selected/SimDeveloper.json'
 }

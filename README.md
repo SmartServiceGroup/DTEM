@@ -1,16 +1,16 @@
 # Introduction
-This repository is the code submitted for paper **Automatic Representation of Developers' Technical Expertise Based on GitHub Social Network**
+This repository is the code submitted for paper **Automatically Deriving Developers’ Technical Expertise from the GitHub Social Network**
 
 # How to Run
-Below shows the repository structure. The correspondence between the table results in the paper and the code can be roughly found through the  comments in the directory trees.
+Below shows the repository structure. The correspondence between the table results in the paper and the code can be roughly found through the comments in the directory trees.
 ```
 .
 ├── Comparisons
 │   └── experiments
-│       ├── alpha		# run this to get the result compared with Dev2Vec, in Table 3 & 11, SimDeveloper/Dev2Vec Method
-│       ├── beta		# run this to get performance without watch in Table 9
-│       ├── gamma		# run this to get the result of GAT Method results in Table 4,5,11
-│       └── theta   # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
+│       ├── alpha       # run this to get the result compared with Dev2Vec, in Table 3 & 11, SimDeveloper/Dev2Vec Method
+│       ├── beta        # run this to get performance without watch in Table 9
+│       ├── gamma       # run this to get the result of GAT Method results in Table 4,5,11
+│       └── theta       # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
 ├── GHCrawler # run this to get the dataset in the research scope
 │   └── export
 ├── GNN # run code here to get the detailed GNN performance in table 7 & table 8
@@ -48,10 +48,6 @@ Below shows the repository structure. The correspondence between the table resul
 │   │   └── metric
 │   ├── ContributionRepo_CF
 │   │   └── metric
-│   ├── PRReviewer
-│   │   └── metric
-│   ├── PRReviewer_CF
-│   │   └── metric
 │   ├── RepoMaintainer
 │   │   └── metric
 │   ├── RepoMaintainer_CF
@@ -66,5 +62,3 @@ Below shows the repository structure. The correspondence between the table resul
 │   └── user_join_repository
 └── imgs
 ```
-
-## 

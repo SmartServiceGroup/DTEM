@@ -33,28 +33,6 @@ class ContributionRepoDataset(Dataset):
     def __getitem__(self, idx):
         return self.data[idx]
     
-class PRReviewerDataset(Dataset):
-    def __init__(self, repo_idx, pr_idx, contributor_idxs, repo_embedding, pr_embedding, contributor_embedding, is_tensor=True) -> None:
-        super().__init__()
-        self.data = []
-        src_embedding = repo_embedding[repo_idx]
-        if is_tensor:
-            src_embedding = src_embedding.cpu().numpy().tolist()
-        mid_embedding = pr_embedding[pr_idx]
-        if is_tensor:
-            mid_embedding = mid_embedding.cpu().numpy().tolist()
-        for contributor_idx in contributor_idxs:
-            dst_embedding = contributor_embedding[contributor_idx]
-            if is_tensor:
-                dst_embedding = dst_embedding.cpu().numpy().tolist()
-            self.data.append([src_embedding + mid_embedding + dst_embedding, contributor_idx])
-
-    def __len__(self):
-        return len(self.data)
-    
-    def __getitem__(self, idx):
-        return self.data[idx]
-
 class RepoMaintainerDataset(Dataset):
     def __init__(self, repo_idx, contributor_idxs, repo_embedding, contributor_embedding, is_tensor=True) -> None:
         super().__init__()
@@ -101,14 +79,6 @@ task_configs = {
         'wo_mp_PCA': 'PCA/ContributionRepo_result_ContributionRepo_wo_mp_PCA.txt_08.bin',
         'valid_dataset_test': 'dataset_valid_test.json',
         'entity_names': ['contributor', 'repository'], 
-    }, 
-    'PRReviewer': {
-        'task': 'PRReviewer', 
-        'mp': 'PRReviewer_result_PRReviewer_mp.txt_09.bin',
-        'wo_mp': 'PRReviewer_result_PRReviewer_wo_mp.txt_09.bin',
-        'wo_mp_PCA': 'PCA/PRReviewer_result_PRReviewer_wo_mp_PCA.txt_09.bin',
-        'valid_dataset_test': 'dataset_valid_test_modified.json',
-        'entity_names': ['repository', 'pr', 'contributor']
     }, 
     'RepoMaintainer': {
         'task': 'RepoMaintainer', 
@@ -168,11 +138,6 @@ def main():
             if len(labels) < 5:  
                 continue
             d = ContributionRepoDataset(contributor_idx, search_scope, repo_embedding=embeddings[1], contributor_embedding=embeddings[0])
-        elif task_name == 'PRReviewer': 
-            repo_idx, pr_idx, search_scope, labels = item
-            if len(search_scope) < 10:
-                continue
-            d = PRReviewerDataset(repo_idx, pr_idx, search_scope, embeddings[0], embeddings[1], embeddings[2])
         elif task_name == 'RepoMaintainer': 
             repo_idx, search_scope, labels = item
             if len(search_scope) < 10:
@@ -209,7 +174,6 @@ def main():
 
         key = \
             contributor_idx if task_name == 'ContributionRepo'  else \
-            repo_idx        if task_name == 'PRReviewer'        else \
             repo_idx        if task_name == 'RepoMaintainer'    else \
             contributor_idx if task_name == 'SimDeveloper'      else \
             '<ERR>'
