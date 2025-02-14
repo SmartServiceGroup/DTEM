@@ -26,7 +26,7 @@ class Net(nn.Module):
         return self.sigmoid(x).squeeze()
 
 class MyDataset(Dataset):
-    def __init__(self, samples, repo_node_embedding, contributor_embedding) -> None:
+    def __init__(self, samples, node_embedding_obj) -> None:
         super().__init__()
         self.data = []
         if isinstance(samples, str):
@@ -34,13 +34,13 @@ class MyDataset(Dataset):
                 samples = json.load(inf)
         for sample in samples:
             assert len(sample) == 3
-            contributor_idx, pos_repo_idx, neg_repo_idx = sample
+            src_idx, pos_idx, neg_idx = sample
             self.data.append([
-                torch.cat([contributor_embedding[contributor_idx], repo_node_embedding[pos_repo_idx]], dim=-1).numpy().tolist(),
+                torch.cat([node_embedding_obj[src_idx], node_embedding_obj[pos_idx]], dim=-1).numpy().tolist(),
                 1,
             ])
             self.data.append([
-                torch.cat([contributor_embedding[contributor_idx], repo_node_embedding[neg_repo_idx]], dim=-1).numpy().tolist(),
+                torch.cat([node_embedding_obj[src_idx], node_embedding_obj[neg_idx]], dim=-1).numpy().tolist(),
                 0,
             ])
     
@@ -76,9 +76,7 @@ if __name__ == "__main__":
     
     # Please replace the path with your own path
     node_embedding_path = sys.argv[2]
-    all_embedding = torch.load(node_embedding_path)
-    repo_node_embedding = all_embedding["repository"]
-    contributor_node_embedding = all_embedding["contributor"]
+    node_embedding = torch.load(node_embedding_path)["contributor"]
      
     
     for i in range(K):
@@ -86,13 +84,14 @@ if __name__ == "__main__":
         test_sample_path = './data/10fold/test{}.json'.format(i)
         model_path = './bin/{}{}.bin'.format(sys.argv[3], i)
     
-        train_dataset = MyDataset(samples=train_sample_path, repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)
-        test_dataset  = MyDataset(samples=test_sample_path,  repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)
-        train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
-        test_dataloader  = DataLoader(test_dataset,  batch_size=32, shuffle=True, collate_fn=collate_fn)
+        train_dataset = MyDataset(samples=train_sample_path, node_embedding_obj=node_embedding)
+        test_dataset = MyDataset(samples=test_sample_path, node_embedding_obj=node_embedding)
 
+        train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
+        test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
+        
         model = Net(embedding_dim=embed_dim)
-        model.to(device)
+        model = model.to(device)
         optimizer = optim.Adam(model.parameters(), lr=0.001)
         criterion = nn.BCELoss()
         best_f1 = 0

@@ -157,3 +157,10 @@ if __name__ == "__main__":
             neg_totals += neg_total
     precision, recall, f1 = metric(pos_rights, neg_rights, pos_totals, neg_totals)
     print(f"Test: precision={precision}, recall={recall}, f1={f1}")
+
+'''
+LE(paper)   Test: precision=0.8429319371727748, recall=0.9537914691943128, f1=0.8949416342412451
+L:          Test: precision=0.9509945229172673, recall=0.9771919431279621, f1=0.9639152666179693
+E:          Test: precision=0.8648426812585499, recall=0.9363151658767772, f1=0.8991608590527663
+EL:         Test: precision=0.9595426561125769, recall=0.9694905213270142, f1=0.9644909385590099
+'''

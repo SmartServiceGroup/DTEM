@@ -26,6 +26,7 @@ class Net(nn.Module):
         return self.sigmoid(x).squeeze()
 
 class MyDataset(Dataset):
+
     def __init__(self, samples, repo_node_embedding, contributor_embedding) -> None:
         super().__init__()
         self.data = []
@@ -34,13 +35,16 @@ class MyDataset(Dataset):
                 samples = json.load(inf)
         for sample in samples:
             assert len(sample) == 3
-            contributor_idx, pos_repo_idx, neg_repo_idx = sample
+            repo_idx, pos_contributor_idx, neg_contributor_idx = sample
             self.data.append([
-                torch.cat([contributor_embedding[contributor_idx], repo_node_embedding[pos_repo_idx]], dim=-1).numpy().tolist(),
+                torch.cat([repo_node_embedding[repo_idx], contributor_embedding[pos_contributor_idx]], dim=-1).numpy().tolist(),
                 1,
             ])
             self.data.append([
-                torch.cat([contributor_embedding[contributor_idx], repo_node_embedding[neg_repo_idx]], dim=-1).numpy().tolist(),
+                torch.cat([
+                    repo_node_embedding[repo_idx], 
+                    contributor_embedding[neg_contributor_idx]
+                ], dim=-1).numpy().tolist(),
                 0,
             ])
     
@@ -87,13 +91,14 @@ if __name__ == "__main__":
         model_path = './bin/{}{}.bin'.format(sys.argv[3], i)
     
         train_dataset = MyDataset(samples=train_sample_path, repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)
-        test_dataset  = MyDataset(samples=test_sample_path,  repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)
+        test_dataset = MyDataset(samples=test_sample_path, repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)
+    
         train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
-        test_dataloader  = DataLoader(test_dataset,  batch_size=32, shuffle=True, collate_fn=collate_fn)
+        test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
 
         model = Net(embedding_dim=embed_dim)
-        model.to(device)
-        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        model = model.to(device)
+        optimizer = optim.Adam(model.parameters(), lr=0.0005)
         criterion = nn.BCELoss()
         best_f1 = 0
         epochs = 60

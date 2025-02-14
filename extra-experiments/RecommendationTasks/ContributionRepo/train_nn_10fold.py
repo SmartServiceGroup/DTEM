@@ -64,6 +64,15 @@ def metric(pos_right, neg_right, pos_total, neg_total):
     f1 = 2 * precision * recall / (precision + recall)
     return precision, recall, f1
 
+
+'''
+args: 
+    [1] dst_file                result/10_fold_result_(little|middle|large).txt
+    [2] node_embedding_path     ../../extra_experiment/node_embedding/(little|middle|large).bin
+    [3] model_name              model_(little|middle|large)
+    [4] embed_dim               512
+'''
+
 if __name__ == "__main__":
     K = 10
     dst_file = sys.argv[1]
@@ -83,7 +92,7 @@ if __name__ == "__main__":
     
     for i in range(K):
         train_sample_path = './data/10fold/train{}.json'.format(i)
-        test_sample_path = './data/10fold/test{}.json'.format(i)
+        test_sample_path  = './data/10fold/test{}.json'.format(i)
         model_path = './bin/{}{}.bin'.format(sys.argv[3], i)
     
         train_dataset = MyDataset(samples=train_sample_path, repo_node_embedding=repo_node_embedding, contributor_embedding=contributor_node_embedding)

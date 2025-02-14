@@ -7,9 +7,9 @@ Below shows the repository structure. The correspondence between the table resul
 .
 ├── Comparisons
 │   └── experiments
-│       ├── alpha       # run this to get the result compared with Dev2Vec, in Table 3 & 11, SimDeveloper/Dev2Vec Method
+│       ├── alpha       # run this to get the result compared with Dev2Vec, in Table 4 & 12, SimDeveloper/Dev2Vec Method
 │       ├── beta        # run this to get performance without watch in Table 9
-│       ├── gamma       # run this to get the result of GAT Method results in Table 4,5,11
+│       ├── gamma       # run this to get the result of GAT Method results in Table 4,5,12
 │       └── theta       # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
 ├── GHCrawler # run this to get the dataset in the research scope
 │   └── export
@@ -58,7 +58,18 @@ Below shows the repository structure. The correspondence between the table resul
 │   │   └── metric
 │   └── TopicEmbedding # the baseline method in table 4 & table 5
 ├── T-Test # run code here to get the t-test result in table 10
-│   ├── user_contribute_repository
-│   └── user_join_repository
+├── extra-experiments
+│   └── extra_experiment # codes here to run experiments on shrinked graph, shown in table 14 & 15
 └── imgs
 ```
+
+Recommended running configuration:
+
+- OS: Ubuntu 20.04 
+- CPU: Intel Xeon Gold 6254 @ 3.1GHz
+- GPU: Nvidia A100 40GB
+- mem: 125GB+
+- SSD: 1TB
+- python version: 3.7+ 
+- pytorch version: 1.12.0+
+- dgl version: 1.0.02+ 
