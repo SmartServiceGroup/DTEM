@@ -7,12 +7,6 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, random_split
 from tqdm import tqdm
 
-# 和 baseline.py 的区别: 
-# 1. 使用的模型文件不同 (bin/{baseline.bin,model.bin})
-# 2. 数据的特征数量不同 (此为512), 来源也不同 
-#   - baseline 是用pickle加载的, 在 ../TopicEmbedding/embed/{contributor,repo}_tpoic_embedding.pkl
-#   - train_nn 是用torch加载的, 来自 ../../GNN/HetSAGE/node_embedding/HetSAVE_node_embedding.bin
-# 3. batch_size不同: 那个是64, 这个是32.
 
 
 # feat_size = 512
@@ -167,8 +161,6 @@ if __name__ == "__main__":
     print(f"Test: precision={precision}, recall={recall}, f1={f1}")
 
 '''
-这是在二分类任务上的测试指标，区别于真正的推荐任务
-训练包括随机性，所以每一次跑出来的结果都在小范围波动
 LE(paper)   Test: precision=0.8429319371727748, recall=0.9537914691943128, f1=0.8949416342412451
 L:          Test: precision=0.9509945229172673, recall=0.9771919431279621, f1=0.9639152666179693
 E:          Test: precision=0.8648426812585499, recall=0.9363151658767772, f1=0.8991608590527663

@@ -60,10 +60,19 @@ Below shows the repository structure. The correspondence between the table resul
 │   ├── SimDeveloper_CF
 │   │   └── metric
 │   └── TopicEmbedding # the baseline method in table 6 & table 7
+├── extra-experiments
+│   └── extra_experiment # codes here to run experiments on shrinked graph
 ├── T-Test # run code here to get the t-test result in table 5
 │   ├── user_contribute_repository
 │   └── user_join_repository
 └── imgs
 ```
-
-## 
+Recommended running configuration:
+  - OS: Ubuntu 20.04 
+	- CPU: Intel Xeon Gold 6254 @ 3.1GHz
+	- GPU: Nvidia A100 40GB
+	- mem: 125GB+
+	- SSD: 1TB
+	- python version: 3.7+ 
+	- pytorch version: 1.12.0+
+	- dgl version: 1.0.02+ 
