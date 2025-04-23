@@ -10,7 +10,11 @@ Below shows the repository structure. The correspondence between the table resul
 │       ├── alpha       # run this to get the result compared with Dev2Vec, in Table 4 & 12, SimDeveloper/Dev2Vec Method
 │       ├── beta        # run this to get performance without watch in Table 9
 │       ├── gamma       # run this to get the result of GAT Method results in Table 4,5,12
-│       └── theta       # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
+│       ├── theta       # run this to get the result of No Social Network & No Social Network (w/o mp) in Table 6
+│       └── eta					# run this to get the validation of threshold in Section 3.1. 
+├── bot-detection # run this to get result of BIN and BIMAN method in Section 3.1
+│   ├── Crawler4Bot
+│   └── Crawler4Commit
 ├── GHCrawler # run this to get the dataset in the research scope
 │   └── export
 ├── GNN # run code here to get the detailed GNN performance in table 7 & table 8

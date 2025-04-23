@@ -34,26 +34,7 @@ for result_index in range(num_result):
                     i += 2
             f.readline()
             
-# model_score_distribution = {}
-# for task in result:
-#     model_score_distribution[task] = {}
-#     for model in result[task]:
-#         model_score_distribution[task][model] = [0, 0, 0, 0, 0, 0]
-    
-# for task in result:
-#     for model in result[task]:
-#         for score in result[task][model]:
-#             model_score_distribution[task][model][score] += 1
-# print(model_score_distribution)
 
-modelAvg = {}
-for model in model2task:
-    scores = []
-    for task in result:
-        if model in result[task]:
-            scores.extend(result[task][model])
-    modelAvg[model] = np.average(scores)
-print(modelAvg)
     
 for model in model2task:
     if model == "DTEM":
@@ -62,9 +43,8 @@ for model in model2task:
     modelScores = []
     DTEMScores = []
     for task in model2task[model]:
-        if task == "PRReviewer":
-            continue
         modelScores.extend(result[task][model])
         DTEMScores.extend(result[task]["DTEM"])
-    ttest_result = scipy.stats.ttest_ind(DTEMScores, modelScores)
+    print(len(modelScores), len(DTEMScores))
+    ttest_result = scipy.stats.ttest_rel(DTEMScores, modelScores, alternative='greater')
     print(ttest_result)
